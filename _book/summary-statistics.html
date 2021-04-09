@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Summary statistics | Radon mapping with R</title>
+  <meta name="description" content="Radon mapping concepts with examples" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Summary statistics | Radon mapping with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Radon mapping concepts with examples" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Summary statistics | Radon mapping with R" />
+  
+  <meta name="twitter:description" content="Radon mapping concepts with examples" />
+  
+
+<meta name="author" content="Javier Elío" />
+
+
+<meta name="date" content="2021-04-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exploratory-data-analysis.html"/>
+<link rel="next" href="interpolation.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session"><i class="fa fa-check"></i>R session</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="read-data.html"><a href="read-data.html"><i class="fa fa-check"></i><b>1</b> Read data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="read-data.html"><a href="read-data.html#administrative-divisions"><i class="fa fa-check"></i><b>1.1</b> Administrative divisions (</a></li>
+<li class="chapter" data-level="1.2" data-path="read-data.html"><a href="read-data.html#grids-10-x-10-km"><i class="fa fa-check"></i><b>1.2</b> Grids 10 x 10 km</a></li>
+<li class="chapter" data-level="1.3" data-path="read-data.html"><a href="read-data.html#make-our-own-grid-e.g.-0.1-x-0.1-degrees"><i class="fa fa-check"></i><b>1.3</b> Make our own grid (e.g. 0.1 x 0.1 degrees)</a></li>
+<li class="chapter" data-level="1.4" data-path="read-data.html"><a href="read-data.html#geology-15m"><i class="fa fa-check"></i><b>1.4</b> Geology 1:5M</a></li>
+<li class="chapter" data-level="1.5" data-path="read-data.html"><a href="read-data.html#study-area"><i class="fa fa-check"></i><b>1.5</b> Study area</a></li>
+<li class="chapter" data-level="1.6" data-path="read-data.html"><a href="read-data.html#indoor-radon-simulated-data"><i class="fa fa-check"></i><b>1.6</b> Indoor radon (simulated data)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#histogram-rn"><i class="fa fa-check"></i><b>2.1</b> Histogram (Rn)</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>2.2</b> Spatial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3</b> Summary statistics</a></li>
+<li class="chapter" data-level="4" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>4</b> Interpolation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interpolation.html"><a href="interpolation.html#prediction-by-grids-of-0.015-x-0.015-degrees"><i class="fa fa-check"></i><b>4.1</b> Prediction by grids of 0.015 x 0.015 degrees</a></li>
+<li class="chapter" data-level="4.2" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>4.2</b> Inverse distance weighted interpolation (IDW)</a></li>
+<li class="chapter" data-level="4.3" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>4.3</b> Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>5</b> Dose map</a></li>
+<li class="chapter" data-level="6" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>6</b> Interactive maps</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Radon mapping with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="summary-statistics" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Summary statistics</h1>
+<pre><code>#&gt; Classes &#39;sf&#39; and &#39;data.frame&#39;:   1000 obs. of  12 variables:
+#&gt;  $ Rn       : num  5.113 0.785 1.763 6.323 36.349 ...
+#&gt;  $ LogRn    : num  1.632 -0.242 0.567 1.844 3.593 ...
+#&gt;  $ Rn_Cen   : logi  TRUE TRUE TRUE TRUE FALSE FALSE ...
+#&gt;  $ brks     : Factor w/ 6 levels &quot;[0,50)&quot;,&quot;[50,100)&quot;,..: 1 1 1 1 1 4 1 3 2 1 ...
+#&gt;  $ Case     : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 2 1 1 1 1 ...
+#&gt;  $ CELLCODE : chr  &quot;10kmE512N372&quot; &quot;10kmE513N367&quot; &quot;10kmE513N367&quot; &quot;10kmE513N367&quot; ...
+#&gt;  $ EOFORIGIN: num  5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
+#&gt;  $ NOFORIGIN: num  3720000 3670000 3670000 3670000 3680000 3680000 3680000 3680000 3680000 3690000 ...
+#&gt;  $ Id       : Factor w/ 1022 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 341 362 362 362 363 363 363 363 363 364 ...
+#&gt;  $ GID_0    : chr  &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; ...
+#&gt;  $ NAME_0   : chr  &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; ...
+#&gt;  $ geometry :sfc_POINT of length 1000; first list element:  &#39;XY&#39; num  23 56
+#&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry&quot;
+#&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:11] &quot;Rn&quot; &quot;LogRn&quot; &quot;Rn_Cen&quot; &quot;brks&quot; ...</code></pre>
+<pre><code>#&gt;    CELLCODE           EOFORIGIN         NOFORIGIN             Id        GID_0          
+#&gt;  Length:93          Min.   :5120000   Min.   :3610000   340    : 1   Length:93         
+#&gt;  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1   Class :character  
+#&gt;  Mode  :character   Median :5160000   Median :3670000   361    : 1   Mode  :character  
+#&gt;                     Mean   :5163871   Mean   :3674516   362    : 1                     
+#&gt;                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1                     
+#&gt;                     Max.   :5210000   Max.   :3740000   364    : 1                     
+#&gt;                                                         (Other):87                     
+#&gt;     NAME_0                N              Case              AM                SD          
+#&gt;  Length:93          Min.   : 0.00   Min.   :0.0000   Min.   :  2.957   Min.   :  0.9767  
+#&gt;  Class :character   1st Qu.: 7.00   1st Qu.:0.0000   1st Qu.: 18.881   1st Qu.: 19.1492  
+#&gt;  Mode  :character   Median :12.00   Median :0.0000   Median : 38.933   Median : 39.4056  
+#&gt;                     Mean   :10.75   Mean   :0.7674   Mean   : 69.400   Mean   : 67.9795  
+#&gt;                     3rd Qu.:14.00   3rd Qu.:1.0000   3rd Qu.: 85.645   3rd Qu.: 77.3011  
+#&gt;                     Max.   :22.00   Max.   :9.0000   Max.   :686.712   Max.   :548.5429  
+#&gt;                                     NA&#39;s   :7        NA&#39;s   :7         NA&#39;s   :11        
+#&gt;        GM               GSD             MIN               MAX                   geometry.x
+#&gt;  Min.   :  2.061   Min.   :1.124   Min.   :  0.323   Min.   :   5.012   POLYGON      :93  
+#&gt;  1st Qu.: 11.320   1st Qu.:2.276   1st Qu.:  1.745   1st Qu.:  58.887   epsg:4326    : 0  
+#&gt;  Median : 24.043   Median :2.753   Median :  4.233   Median : 131.628   +proj=long...: 0  
+#&gt;  Mean   : 44.716   Mean   :2.947   Mean   : 11.410   Mean   : 212.524                     
+#&gt;  3rd Qu.: 53.733   3rd Qu.:3.437   3rd Qu.: 11.316   3rd Qu.: 230.376                     
+#&gt;  Max.   :472.351   Max.   :6.198   Max.   :143.200   Max.   :1615.331                     
+#&gt;  NA&#39;s   :7         NA&#39;s   :11      NA&#39;s   :7         NA&#39;s   :7                            
+#&gt;               geometry.y
+#&gt;  GEOMETRYCOLLECTION: 7  
+#&gt;  MULTIPOINT        :82  
+#&gt;  POINT             : 4  
+#&gt;  epsg:4326         : 0  
+#&gt;  +proj=long...     : 0  
+#&gt;                         
+#&gt; </code></pre>
+<p><img src="radon_mapping_book_files/figure-html/sum-stat-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt; [1] 686.7122</code></pre>
+<p><img src="radon_mapping_book_files/figure-html/sum-stat-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt; Classes &#39;sf&#39; and &#39;data.frame&#39;:   93 obs. of  17 variables:
+#&gt;  $ CELLCODE  : chr  &quot;10kmE512N371&quot; &quot;10kmE512N372&quot; &quot;10kmE513N366&quot; &quot;10kmE513N367&quot; ...
+#&gt;  $ EOFORIGIN : num  5120000 5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
+#&gt;  $ NOFORIGIN : num  3710000 3720000 3660000 3670000 3680000 3690000 3700000 3710000 3720000 3730000 ...
+#&gt;  $ Id        : Factor w/ 1022 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 340 341 361 362 363 364 365 366 367 368 ...
+#&gt;  $ GID_0     : chr  &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; ...
+#&gt;  $ NAME_0    : chr  &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; ...
+#&gt;  $ N         : num  0 1 0 3 5 12 19 15 10 0 ...
+#&gt;  $ Case      : num  NA 0 NA 0 1 0 0 0 0 NA ...
+#&gt;  $ AM        : num  NA 5.11 NA 2.96 97.47 ...
+#&gt;  $ SD        : num  NA NA NA 2.96 91.43 ...
+#&gt;  $ GM        : num  NA 5.11 NA 2.06 56.42 ...
+#&gt;  $ GSD       : num  NA NA NA 2.86 3.79 ...
+#&gt;  $ MIN       : num  NA 5.113 NA 0.785 8.032 ...
+#&gt;  $ MAX       : num  NA 5.11 NA 6.32 205.46 ...
+#&gt;  $ geometry.x:sfc_POLYGON of length 93; first list element: List of 1
+#&gt;   ..$ : num [1:4, 1:2] 23 23 23 23 55.9 ...
+#&gt;   ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;XY&quot; &quot;POLYGON&quot; &quot;sfg&quot;
+#&gt;  $ geometry.y:sfc_GEOMETRY of length 93; first list element:  list()
+#&gt;   ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;XY&quot; &quot;GEOMETRYCOLLECTION&quot; &quot;sfg&quot;
+#&gt;  $ AM_brks   : Factor w/ 6 levels &quot;[0,25)&quot;,&quot;[25,50)&quot;,..: NA 1 NA 1 4 1 1 2 1 NA ...
+#&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry.x&quot;
+#&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:15] &quot;CELLCODE&quot; &quot;EOFORIGIN&quot; &quot;NOFORIGIN&quot; &quot;Id&quot; ...</code></pre>
+<pre><code>#&gt; [inverse distance weighted interpolation]</code></pre>
+<p><img src="radon_mapping_book_files/figure-html/sum-stat-3.png" width="672" style="display: block; margin: auto;" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exploratory-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interpolation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Interpolation | Radon mapping with R</title>
+  <meta name="description" content="Radon mapping concepts with examples" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Interpolation | Radon mapping with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Radon mapping concepts with examples" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Interpolation | Radon mapping with R" />
+  
+  <meta name="twitter:description" content="Radon mapping concepts with examples" />
+  
+
+<meta name="author" content="Javier Elío" />
+
+
+<meta name="date" content="2021-04-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="summary-statistics.html"/>
+<link rel="next" href="dose-map.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session"><i class="fa fa-check"></i>R session</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="read-data.html"><a href="read-data.html"><i class="fa fa-check"></i><b>1</b> Read data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="read-data.html"><a href="read-data.html#administrative-divisions"><i class="fa fa-check"></i><b>1.1</b> Administrative divisions (</a></li>
+<li class="chapter" data-level="1.2" data-path="read-data.html"><a href="read-data.html#grids-10-x-10-km"><i class="fa fa-check"></i><b>1.2</b> Grids 10 x 10 km</a></li>
+<li class="chapter" data-level="1.3" data-path="read-data.html"><a href="read-data.html#make-our-own-grid-e.g.-0.1-x-0.1-degrees"><i class="fa fa-check"></i><b>1.3</b> Make our own grid (e.g. 0.1 x 0.1 degrees)</a></li>
+<li class="chapter" data-level="1.4" data-path="read-data.html"><a href="read-data.html#geology-15m"><i class="fa fa-check"></i><b>1.4</b> Geology 1:5M</a></li>
+<li class="chapter" data-level="1.5" data-path="read-data.html"><a href="read-data.html#study-area"><i class="fa fa-check"></i><b>1.5</b> Study area</a></li>
+<li class="chapter" data-level="1.6" data-path="read-data.html"><a href="read-data.html#indoor-radon-simulated-data"><i class="fa fa-check"></i><b>1.6</b> Indoor radon (simulated data)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#histogram-rn"><i class="fa fa-check"></i><b>2.1</b> Histogram (Rn)</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>2.2</b> Spatial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3</b> Summary statistics</a></li>
+<li class="chapter" data-level="4" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>4</b> Interpolation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interpolation.html"><a href="interpolation.html#prediction-by-grids-of-0.015-x-0.015-degrees"><i class="fa fa-check"></i><b>4.1</b> Prediction by grids of 0.015 x 0.015 degrees</a></li>
+<li class="chapter" data-level="4.2" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>4.2</b> Inverse distance weighted interpolation (IDW)</a></li>
+<li class="chapter" data-level="4.3" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>4.3</b> Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>5</b> Dose map</a></li>
+<li class="chapter" data-level="6" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>6</b> Interactive maps</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Radon mapping with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interpolation" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Interpolation</h1>
+<div id="prediction-by-grids-of-0.015-x-0.015-degrees" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Prediction by grids of 0.015 x 0.015 degrees</h2>
+<p><img src="radon_mapping_book_files/figure-html/pred-grids-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="inverse-distance-weighted-interpolation-idw" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Inverse distance weighted interpolation (IDW)</h2>
+<pre><code>#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]
+#&gt; [inverse distance weighted interpolation]</code></pre>
+<p><img src="radon_mapping_book_files/figure-html/IDW-icp-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>IDW (optimal idp = 2)</p>
+<pre><code>#&gt; [inverse distance weighted interpolation]</code></pre>
+<p>Plot map (grids cells of 0.015 x 0.015 degrees)
+<img src="radon_mapping_book_files/figure-html/IDW-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ordinary-kriging" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Ordinary Kriging</h2>
+<p><img src="radon_mapping_book_files/figure-html/OK-variog-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Test: Random permutations (100 random variograms)
+<img src="radon_mapping_book_files/figure-html/OK-vg-random-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Interpolation - TransGaussian kriging using Box-Cox transforms (gstat) —-</p>
+<pre><code>#&gt; [using ordinary kriging]
+#&gt; [generalized least squares trend estimation]
+#&gt; [using simple kriging]</code></pre>
+<p>Plot predictions (grids cells of 0.025 x 0.025 degrees)</p>
+<p><img src="radon_mapping_book_files/figure-html/OK-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Summarize by grids cells of 10 km x 10 km
+<img src="radon_mapping_book_files/figure-html/sim-grids-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt;     IDW_Pred          OK_Pred            OK_SD            OK_RSD         CELLCODE        
+#&gt;  Min.   :   1.13   Min.   :  7.811   Min.   :  6.45   Min.   :0.0569   Length:4489       
+#&gt;  1st Qu.:  21.34   1st Qu.: 20.840   1st Qu.: 16.27   1st Qu.:0.4345   Class :character  
+#&gt;  Median :  40.81   Median : 36.673   Median : 22.26   Median :0.6969   Mode  :character  
+#&gt;  Mean   :  65.39   Mean   : 56.319   Mean   : 28.59   Mean   :0.7145                     
+#&gt;  3rd Qu.:  76.86   3rd Qu.: 67.921   3rd Qu.: 33.67   3rd Qu.:0.9728                     
+#&gt;  Max.   :1355.53   Max.   :594.003   Max.   :111.34   Max.   :1.7807                     
+#&gt;                                                                                          
+#&gt;    EOFORIGIN         NOFORIGIN             Id          GID_0              NAME_0         
+#&gt;  Min.   :5120000   Min.   :3610000   387    :  65   Length:4489        Length:4489       
+#&gt;  1st Qu.:5150000   1st Qu.:3650000   388    :  65   Class :character   Class :character  
+#&gt;  Median :5160000   Median :3670000   390    :  65   Mode  :character   Mode  :character  
+#&gt;  Mean   :5163836   Mean   :3674636   446    :  65                                        
+#&gt;  3rd Qu.:5180000   3rd Qu.:3700000   447    :  65                                        
+#&gt;  Max.   :5210000   Max.   :3730000   476    :  65                                        
+#&gt;                                      (Other):4099                                        
+#&gt;           geometry   
+#&gt;  POINT        :4489  
+#&gt;  epsg:NA      :   0  
+#&gt;  +proj=long...:   0  
+#&gt;                      
+#&gt;                      
+#&gt;                      
+#&gt; </code></pre>
+<p>Summarize (by Id)</p>
+<p>Add values to Grid cells of 10 x 10 km (Grids_10km_Sum)</p>
+<pre><code>#&gt;    CELLCODE           EOFORIGIN         NOFORIGIN             Id        GID_0          
+#&gt;  Length:93          Min.   :5120000   Min.   :3610000   340    : 1   Length:93         
+#&gt;  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1   Class :character  
+#&gt;  Mode  :character   Median :5160000   Median :3670000   361    : 1   Mode  :character  
+#&gt;                     Mean   :5163871   Mean   :3674516   362    : 1                     
+#&gt;                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1                     
+#&gt;                     Max.   :5210000   Max.   :3740000   364    : 1                     
+#&gt;                                                         (Other):87                     
+#&gt;     NAME_0               N.x             Case              AM                SD          
+#&gt;  Length:93          Min.   : 0.00   Min.   :0.0000   Min.   :  2.957   Min.   :  0.9767  
+#&gt;  Class :character   1st Qu.: 7.00   1st Qu.:0.0000   1st Qu.: 18.881   1st Qu.: 19.1492  
+#&gt;  Mode  :character   Median :12.00   Median :0.0000   Median : 38.933   Median : 39.4056  
+#&gt;                     Mean   :10.75   Mean   :0.7674   Mean   : 69.400   Mean   : 67.9795  
+#&gt;                     3rd Qu.:14.00   3rd Qu.:1.0000   3rd Qu.: 85.645   3rd Qu.: 77.3011  
+#&gt;                     Max.   :22.00   Max.   :9.0000   Max.   :686.712   Max.   :548.5429  
+#&gt;                                     NA&#39;s   :7        NA&#39;s   :7         NA&#39;s   :11        
+#&gt;        GM               GSD             MIN               MAX                AM_brks        Prob        
+#&gt;  Min.   :  2.061   Min.   :1.124   Min.   :  0.323   Min.   :   5.012   [0,25)   :29   Min.   : 0.0000  
+#&gt;  1st Qu.: 11.320   1st Qu.:2.276   1st Qu.:  1.745   1st Qu.:  58.887   [25,50)  :23   1st Qu.: 0.5858  
+#&gt;  Median : 24.043   Median :2.753   Median :  4.233   Median : 131.628   [50,75)  : 9   Median : 2.8360  
+#&gt;  Mean   : 44.716   Mean   :2.947   Mean   : 11.410   Mean   : 212.524   [75,100) : 9   Mean   : 7.6290  
+#&gt;  3rd Qu.: 53.733   3rd Qu.:3.437   3rd Qu.: 11.316   3rd Qu.: 230.376   [100,200):12   3rd Qu.: 9.7445  
+#&gt;  Max.   :472.351   Max.   :6.198   Max.   :143.200   Max.   :1615.331   [200,687]: 4   Max.   :79.7604  
+#&gt;  NA&#39;s   :7         NA&#39;s   :11      NA&#39;s   :7         NA&#39;s   :7          NA&#39;s     : 7                    
+#&gt;      Prob_brks       N.y            IDW_AM            IDW_SD            OK_AM            OK_SD         
+#&gt;  [0,1)    :29   Min.   : 1.00   Min.   :  8.996   Min.   :  1.118   Min.   : 11.89   Min.   :  0.4458  
+#&gt;  [1,5)    :28   1st Qu.:38.00   1st Qu.: 25.635   1st Qu.: 10.345   1st Qu.: 24.73   1st Qu.:  4.8030  
+#&gt;  [5,10)   :13   Median :62.00   Median : 45.840   Median : 17.214   Median : 37.41   Median : 10.7934  
+#&gt;  [10,20)  :14   Mean   :48.79   Mean   : 66.900   Mean   : 30.559   Mean   : 56.30   Mean   : 17.5544  
+#&gt;  [20,30)  : 4   3rd Qu.:63.00   3rd Qu.: 84.182   3rd Qu.: 35.327   3rd Qu.: 74.17   3rd Qu.: 19.8067  
+#&gt;  [30,79.8]: 5   Max.   :65.00   Max.   :424.967   Max.   :220.513   Max.   :340.36   Max.   :132.7462  
+#&gt;                 NA&#39;s   :1       NA&#39;s   :1         NA&#39;s   :3         NA&#39;s   :1        NA&#39;s   :3         
+#&gt;          geometry.x              geometry.y               geometry 
+#&gt;  POLYGON      :93   GEOMETRYCOLLECTION: 7   GEOMETRYCOLLECTION: 1  
+#&gt;  epsg:4326    : 0   MULTIPOINT        :82   MULTIPOINT        :90  
+#&gt;  +proj=long...: 0   POINT             : 4   POINT             : 2  
+#&gt;                     epsg:4326         : 0   epsg:NA           : 0  
+#&gt;                     +proj=long...     : 0   +proj=long...     : 0  
+#&gt;                                                                    
+#&gt; </code></pre>
+<p>Plot maps</p>
+<p><img src="radon_mapping_book_files/figure-html/plot-grids-10km-1.png" width="672" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="summary-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dose-map.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

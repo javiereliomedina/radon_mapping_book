@@ -1,0 +1,17 @@
+read-data
+administrative-divisions
+grids-10-x-10-km
+make-our-own-grid-e.g.-0.1-x-0.1-degrees
+geology-15m
+study-area
+indoor-radon-simulated-data
+exploratory-data-analysis
+histogram-rn
+spatial-distribution
+summary-statistics
+interpolation
+prediction-by-grids-of-0.015-x-0.015-degrees
+inverse-distance-weighted-interpolation-idw
+ordinary-kriging
+dose-map
+interactive-maps
