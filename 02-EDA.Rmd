@@ -2,6 +2,7 @@
 
 ## Histogram (Rn)
 ```{r hist}
+
 hist(InRn$Rn,
        prob = T,
        col = "red",
@@ -13,6 +14,7 @@ hist(InRn$Rn,
              col = 1, envelope = 0.95, 
              datax = T,
              main = "Q-Q plot (InRn)")
+  
 ```
 
 

@@ -20,6 +20,7 @@ description: "Radon mapping concepts with examples"
                         message = FALSE,
                         comment = "#>")
   options(knitr.kable.NA = "-")
+  
 ```
 
 # Prerequisites {-}

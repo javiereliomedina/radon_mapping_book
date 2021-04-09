@@ -61,6 +61,70 @@
 <script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -128,6 +192,9 @@
             <section class="normal" id="section-">
 <div id="summary-statistics" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Summary statistics</h1>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="summary-statistics.html#cb75-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## InRn by grids of 10 x 10 km (summry: N, AM, SD, GM, GSD) ----</span></span>
+<span id="cb75-2"><a href="summary-statistics.html#cb75-2" aria-hidden="true" tabindex="-1"></a>  InRn_DL <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(InRn_DL, Grids_10km) </span>
+<span id="cb75-3"><a href="summary-statistics.html#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>(InRn_DL)</span></code></pre></div>
 <pre><code>#&gt; Classes &#39;sf&#39; and &#39;data.frame&#39;:   1000 obs. of  12 variables:
 #&gt;  $ Rn       : num  5.113 0.785 1.763 6.323 36.349 ...
 #&gt;  $ LogRn    : num  1.632 -0.242 0.567 1.844 3.593 ...
@@ -144,30 +211,57 @@
 #&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry&quot;
 #&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
 #&gt;   ..- attr(*, &quot;names&quot;)= chr [1:11] &quot;Rn&quot; &quot;LogRn&quot; &quot;Rn_Cen&quot; &quot;brks&quot; ...</code></pre>
-<pre><code>#&gt;    CELLCODE           EOFORIGIN         NOFORIGIN             Id        GID_0          
-#&gt;  Length:93          Min.   :5120000   Min.   :3610000   340    : 1   Length:93         
-#&gt;  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1   Class :character  
-#&gt;  Mode  :character   Median :5160000   Median :3670000   361    : 1   Mode  :character  
-#&gt;                     Mean   :5163871   Mean   :3674516   362    : 1                     
-#&gt;                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1                     
-#&gt;                     Max.   :5210000   Max.   :3740000   364    : 1                     
-#&gt;                                                         (Other):87                     
-#&gt;     NAME_0                N              Case              AM                SD          
-#&gt;  Length:93          Min.   : 0.00   Min.   :0.0000   Min.   :  2.957   Min.   :  0.9767  
-#&gt;  Class :character   1st Qu.: 7.00   1st Qu.:0.0000   1st Qu.: 18.881   1st Qu.: 19.1492  
-#&gt;  Mode  :character   Median :12.00   Median :0.0000   Median : 38.933   Median : 39.4056  
-#&gt;                     Mean   :10.75   Mean   :0.7674   Mean   : 69.400   Mean   : 67.9795  
-#&gt;                     3rd Qu.:14.00   3rd Qu.:1.0000   3rd Qu.: 85.645   3rd Qu.: 77.3011  
-#&gt;                     Max.   :22.00   Max.   :9.0000   Max.   :686.712   Max.   :548.5429  
-#&gt;                                     NA&#39;s   :7        NA&#39;s   :7         NA&#39;s   :11        
-#&gt;        GM               GSD             MIN               MAX                   geometry.x
-#&gt;  Min.   :  2.061   Min.   :1.124   Min.   :  0.323   Min.   :   5.012   POLYGON      :93  
-#&gt;  1st Qu.: 11.320   1st Qu.:2.276   1st Qu.:  1.745   1st Qu.:  58.887   epsg:4326    : 0  
-#&gt;  Median : 24.043   Median :2.753   Median :  4.233   Median : 131.628   +proj=long...: 0  
-#&gt;  Mean   : 44.716   Mean   :2.947   Mean   : 11.410   Mean   : 212.524                     
-#&gt;  3rd Qu.: 53.733   3rd Qu.:3.437   3rd Qu.: 11.316   3rd Qu.: 230.376                     
-#&gt;  Max.   :472.351   Max.   :6.198   Max.   :143.200   Max.   :1615.331                     
-#&gt;  NA&#39;s   :7         NA&#39;s   :11      NA&#39;s   :7         NA&#39;s   :7                            
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="summary-statistics.html#cb77-1" aria-hidden="true" tabindex="-1"></a>  InRn_DL<span class="sc">$</span>Case <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(InRn_DL<span class="sc">$</span>Case))</span>
+<span id="cb77-2"><a href="summary-statistics.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-3"><a href="summary-statistics.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  InRn_Summary_Grids10km <span class="ot">&lt;-</span> InRn_DL <span class="sc">%&gt;%</span> </span>
+<span id="cb77-4"><a href="summary-statistics.html#cb77-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Id) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-5"><a href="summary-statistics.html#cb77-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb77-6"><a href="summary-statistics.html#cb77-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">Case =</span> <span class="fu">sum</span>(Case),</span>
+<span id="cb77-7"><a href="summary-statistics.html#cb77-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">AM =</span> <span class="fu">mean</span>(Rn),</span>
+<span id="cb77-8"><a href="summary-statistics.html#cb77-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">SD =</span> <span class="fu">sd</span>(Rn),</span>
+<span id="cb77-9"><a href="summary-statistics.html#cb77-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">GM =</span> <span class="fu">exp</span>(<span class="fu">mean</span>((LogRn))),</span>
+<span id="cb77-10"><a href="summary-statistics.html#cb77-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">GSD =</span> <span class="fu">exp</span>(<span class="fu">sd</span>(LogRn)),</span>
+<span id="cb77-11"><a href="summary-statistics.html#cb77-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">MIN =</span> <span class="fu">min</span>(Rn),</span>
+<span id="cb77-12"><a href="summary-statistics.html#cb77-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">MAX =</span> <span class="fu">max</span>(Rn))  </span>
+<span id="cb77-13"><a href="summary-statistics.html#cb77-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-14"><a href="summary-statistics.html#cb77-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Add summary to grids of 10x10 km ----</span></span>
+<span id="cb77-15"><a href="summary-statistics.html#cb77-15" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> <span class="fu">left_join</span>(Grids_10km <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(), InRn_Summary_Grids10km <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(), <span class="at">by =</span> <span class="st">&quot;Id&quot;</span>)</span>
+<span id="cb77-16"><a href="summary-statistics.html#cb77-16" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> </span>
+<span id="cb77-17"><a href="summary-statistics.html#cb77-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-18"><a href="summary-statistics.html#cb77-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">N =</span> <span class="fu">replace_na</span>(N, <span class="dv">0</span>))</span>
+<span id="cb77-19"><a href="summary-statistics.html#cb77-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(Grids_10km_Sum)</span></code></pre></div>
+<pre><code>#&gt;    CELLCODE           EOFORIGIN         NOFORIGIN             Id    
+#&gt;  Length:93          Min.   :5120000   Min.   :3610000   340    : 1  
+#&gt;  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1  
+#&gt;  Mode  :character   Median :5160000   Median :3670000   361    : 1  
+#&gt;                     Mean   :5163871   Mean   :3674516   362    : 1  
+#&gt;                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1  
+#&gt;                     Max.   :5210000   Max.   :3740000   364    : 1  
+#&gt;                                                         (Other):87  
+#&gt;     GID_0              NAME_0                N              Case       
+#&gt;  Length:93          Length:93          Min.   : 0.00   Min.   :0.0000  
+#&gt;  Class :character   Class :character   1st Qu.: 7.00   1st Qu.:0.0000  
+#&gt;  Mode  :character   Mode  :character   Median :12.00   Median :0.0000  
+#&gt;                                        Mean   :10.75   Mean   :0.7674  
+#&gt;                                        3rd Qu.:14.00   3rd Qu.:1.0000  
+#&gt;                                        Max.   :22.00   Max.   :9.0000  
+#&gt;                                                        NA&#39;s   :7       
+#&gt;        AM                SD                 GM               GSD       
+#&gt;  Min.   :  2.957   Min.   :  0.9767   Min.   :  2.061   Min.   :1.124  
+#&gt;  1st Qu.: 18.881   1st Qu.: 19.1492   1st Qu.: 11.320   1st Qu.:2.276  
+#&gt;  Median : 38.933   Median : 39.4056   Median : 24.043   Median :2.753  
+#&gt;  Mean   : 69.400   Mean   : 67.9795   Mean   : 44.716   Mean   :2.947  
+#&gt;  3rd Qu.: 85.645   3rd Qu.: 77.3011   3rd Qu.: 53.733   3rd Qu.:3.437  
+#&gt;  Max.   :686.712   Max.   :548.5429   Max.   :472.351   Max.   :6.198  
+#&gt;  NA&#39;s   :7         NA&#39;s   :11         NA&#39;s   :7         NA&#39;s   :11     
+#&gt;       MIN               MAX                   geometry.x
+#&gt;  Min.   :  0.323   Min.   :   5.012   POLYGON      :93  
+#&gt;  1st Qu.:  1.745   1st Qu.:  58.887   epsg:4326    : 0  
+#&gt;  Median :  4.233   Median : 131.628   +proj=long...: 0  
+#&gt;  Mean   : 11.410   Mean   : 212.524                     
+#&gt;  3rd Qu.: 11.316   3rd Qu.: 230.376                     
+#&gt;  Max.   :143.200   Max.   :1615.331                     
+#&gt;  NA&#39;s   :7         NA&#39;s   :7                            
 #&gt;               geometry.y
 #&gt;  GEOMETRYCOLLECTION: 7  
 #&gt;  MULTIPOINT        :82  
@@ -176,9 +270,33 @@
 #&gt;  +proj=long...     : 0  
 #&gt;                         
 #&gt; </code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="summary-statistics.html#cb79-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Plot number of data in each grid cell ----</span></span>
+<span id="cb79-2"><a href="summary-statistics.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
+<span id="cb79-3"><a href="summary-statistics.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_N <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb79-4"><a href="summary-statistics.html#cb79-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
+<span id="cb79-5"><a href="summary-statistics.html#cb79-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> N)) <span class="sc">+</span> </span>
+<span id="cb79-6"><a href="summary-statistics.html#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb79-7"><a href="summary-statistics.html#cb79-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Number of data&quot;</span>)</span>
+<span id="cb79-8"><a href="summary-statistics.html#cb79-8" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_N</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/sum-stat-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="summary-statistics.html#cb80-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Plot arithmetic mean ----</span></span>
+<span id="cb80-2"><a href="summary-statistics.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>AM, <span class="at">na.rm =</span> T)</span></code></pre></div>
 <pre><code>#&gt; [1] 686.7122</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="summary-statistics.html#cb82-1" aria-hidden="true" tabindex="-1"></a>  breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>AM, <span class="at">na.rm =</span> T))</span>
+<span id="cb82-2"><a href="summary-statistics.html#cb82-2" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AM_brks =</span> <span class="fu">cut</span>(AM, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
+<span id="cb82-3"><a href="summary-statistics.html#cb82-3" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
+<span id="cb82-4"><a href="summary-statistics.html#cb82-4" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_AM <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb82-5"><a href="summary-statistics.html#cb82-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
+<span id="cb82-6"><a href="summary-statistics.html#cb82-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> AM_brks)) <span class="sc">+</span> </span>
+<span id="cb82-7"><a href="summary-statistics.html#cb82-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb82-8"><a href="summary-statistics.html#cb82-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Arithmetic mean&quot;</span>)</span>
+<span id="cb82-9"><a href="summary-statistics.html#cb82-9" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_AM</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/sum-stat-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="summary-statistics.html#cb83-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Probabilistic maps ----  </span></span>
+<span id="cb83-2"><a href="summary-statistics.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Probability of having an indoor radon concentration above the national reference level (e.g. RL = 200 Bq m-3)</span></span>
+<span id="cb83-3"><a href="summary-statistics.html#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Based solely on the indoor radon measurements in each grid of 10x10 km,</span></span>
+<span id="cb83-4"><a href="summary-statistics.html#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and assuming data independence and lognormality</span></span>
+<span id="cb83-5"><a href="summary-statistics.html#cb83-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>(Grids_10km_Sum)</span></code></pre></div>
 <pre><code>#&gt; Classes &#39;sf&#39; and &#39;data.frame&#39;:   93 obs. of  17 variables:
 #&gt;  $ CELLCODE  : chr  &quot;10kmE512N371&quot; &quot;10kmE512N372&quot; &quot;10kmE513N366&quot; &quot;10kmE513N367&quot; ...
 #&gt;  $ EOFORIGIN : num  5120000 5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
@@ -203,7 +321,33 @@
 #&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry.x&quot;
 #&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
 #&gt;   ..- attr(*, &quot;names&quot;)= chr [1:15] &quot;CELLCODE&quot; &quot;EOFORIGIN&quot; &quot;NOFORIGIN&quot; &quot;Id&quot; ...</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="summary-statistics.html#cb85-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1st: estimated Prob[InRn &gt; 200 Bq m-3]</span></span>
+<span id="cb85-2"><a href="summary-statistics.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  RL <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb85-3"><a href="summary-statistics.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span></span>
+<span id="cb85-4"><a href="summary-statistics.html#cb85-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Prob =</span> <span class="dv">100</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="fu">log</span>(RL), <span class="at">mean =</span> <span class="fu">log</span>(GM), <span class="at">sd =</span> <span class="fu">log</span>(GSD)))) </span>
+<span id="cb85-5"><a href="summary-statistics.html#cb85-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb85-6"><a href="summary-statistics.html#cb85-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2nd: Replace values in grids with less than n data (i.e. N &lt; 5) by a modeled value</span></span>
+<span id="cb85-7"><a href="summary-statistics.html#cb85-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the points for the interpolation (centroid)</span></span>
+<span id="cb85-8"><a href="summary-statistics.html#cb85-8" aria-hidden="true" tabindex="-1"></a>  DCen <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(Grids_10km_Sum)</span>
+<span id="cb85-9"><a href="summary-statistics.html#cb85-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inverse distance weighted (IDW) interpolation</span></span>
+<span id="cb85-10"><a href="summary-statistics.html#cb85-10" aria-hidden="true" tabindex="-1"></a>  Prob_IDW <span class="ot">&lt;-</span> <span class="fu">idw</span>(Prob <span class="sc">~</span> <span class="dv">1</span>, <span class="fu">filter</span>(DCen, N <span class="sc">&gt;</span> <span class="dv">5</span>),</span>
+<span id="cb85-11"><a href="summary-statistics.html#cb85-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">newdata =</span> <span class="fu">filter</span>(DCen, N <span class="sc">&lt;=</span> <span class="dv">5</span>),</span>
+<span id="cb85-12"><a href="summary-statistics.html#cb85-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nmax =</span> <span class="dv">10</span>,</span>
+<span id="cb85-13"><a href="summary-statistics.html#cb85-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">idp =</span> <span class="dv">2</span> )</span></code></pre></div>
 <pre><code>#&gt; [inverse distance weighted interpolation]</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="summary-statistics.html#cb87-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace values by the modeled values</span></span>
+<span id="cb87-2"><a href="summary-statistics.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Prob =</span> <span class="fu">replace</span>(Prob, N <span class="sc">&lt;=</span> <span class="dv">5</span>, Prob_IDW<span class="sc">$</span>var1.pred))</span>
+<span id="cb87-3"><a href="summary-statistics.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb87-4"><a href="summary-statistics.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot maps</span></span>
+<span id="cb87-5"><a href="summary-statistics.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>Prob))</span>
+<span id="cb87-6"><a href="summary-statistics.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Prob_brks =</span> <span class="fu">cut</span>(Prob, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
+<span id="cb87-7"><a href="summary-statistics.html#cb87-7" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
+<span id="cb87-8"><a href="summary-statistics.html#cb87-8" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_Prob <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb87-9"><a href="summary-statistics.html#cb87-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
+<span id="cb87-10"><a href="summary-statistics.html#cb87-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> Prob_brks)) <span class="sc">+</span> </span>
+<span id="cb87-11"><a href="summary-statistics.html#cb87-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;%&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb87-12"><a href="summary-statistics.html#cb87-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Prob[InRn &gt; 200 Bq m-3]&quot;</span>)</span>
+<span id="cb87-13"><a href="summary-statistics.html#cb87-13" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_Prob</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/sum-stat-3.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
@@ -258,7 +402,8 @@ gitbook.start({
 "download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
 "toc": {
 "collapse": "subsection"
-}
+},
+"code_folding": "hide"
 });
 });
 </script>
