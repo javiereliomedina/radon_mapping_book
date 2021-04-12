@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 R fos spatial data analysis | Geoinformatics with R</title>
+  <meta name="description" content="Radon mapping concepts with examples" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 R fos spatial data analysis | Geoinformatics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Radon mapping concepts with examples" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 R fos spatial data analysis | Geoinformatics with R" />
+  
+  <meta name="twitter:description" content="Radon mapping concepts with examples" />
+  
+
+<meta name="author" content="Javier Elío" />
+
+
+<meta name="date" content="2021-04-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="exploratory-data-analysis.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Geoinformatics with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session"><i class="fa fa-check"></i>R session</a></li>
+</ul></li>
+<li class="part"><span><b>I R</b></span></li>
+<li class="chapter" data-level="1" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html"><i class="fa fa-check"></i><b>1</b> R fos spatial data analysis</a></li>
+<li class="chapter" data-level="" data-path=""><a href="#part-load-data"><i class="fa fa-check"></i>(PART) Load data</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html#administrative-divisions"><i class="fa fa-check"></i><b>1.1</b> Administrative divisions</a></li>
+<li class="chapter" data-level="1.2" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html#grids-10-x-10-km"><i class="fa fa-check"></i><b>1.2</b> Grids 10 x 10 km</a></li>
+<li class="chapter" data-level="1.3" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html#make-our-own-grid-e.g.-0.1-x-0.1-degrees"><i class="fa fa-check"></i><b>1.3</b> Make our own grid (e.g. 0.1 x 0.1 degrees)</a></li>
+<li class="chapter" data-level="1.4" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html#geology-15m"><i class="fa fa-check"></i><b>1.4</b> Geology 1:5M</a></li>
+<li class="chapter" data-level="1.5" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html#study-area"><i class="fa fa-check"></i><b>1.5</b> Study area</a></li>
+<li class="chapter" data-level="1.6" data-path="r-fos-spatial-data-analysis.html"><a href="r-fos-spatial-data-analysis.html#indoor-radon-simulated-data"><i class="fa fa-check"></i><b>1.6</b> Indoor radon (simulated data)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory data analysis</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#histogram-rn"><i class="fa fa-check"></i><b>2.1</b> Histogram (Rn)</a></li>
+<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>2.2</b> Spatial distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3</b> Summary statistics</a></li>
+<li class="part"><span><b>II Geostatistics</b></span></li>
+<li class="chapter" data-level="4" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>4</b> Interpolation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>4.1</b> Inverse distance weighted interpolation (IDW)</a></li>
+<li class="chapter" data-level="4.2" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>4.2</b> Ordinary Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>5</b> Dose map</a></li>
+<li class="chapter" data-level="6" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>6</b> Interactive maps</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geoinformatics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-fos-spatial-data-analysis" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> R fos spatial data analysis</h1>
+
+</div>
+
+
+
+<div id="administrative-divisions" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Administrative divisions</h2>
+</div>
+<div id="grids-10-x-10-km" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Grids 10 x 10 km</h2>
+</div>
+<div id="make-our-own-grid-e.g.-0.1-x-0.1-degrees" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Make our own grid (e.g. 0.1 x 0.1 degrees)</h2>
+</div>
+<div id="geology-15m" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Geology 1:5M</h2>
+</div>
+<div id="study-area" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Study area</h2>
+</div>
+<div id="indoor-radon-simulated-data" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Indoor radon (simulated data)</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exploratory-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

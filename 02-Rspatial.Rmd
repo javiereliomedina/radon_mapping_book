@@ -1,0 +1,9 @@
+# (PART) R {-}
+
+# R for spatial data analisys 
+
+- R
+
+- sf 
+
+- maps (ggplot2), ...

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Interpolation | Geoinformatics with R</title>
+  <title>Chapter 7 Interpolation | Geoinformatics with R</title>
   <meta name="description" content="Radon mapping concepts with examples" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Interpolation | Geoinformatics with R" />
+  <meta property="og:title" content="Chapter 7 Interpolation | Geoinformatics with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Interpolation | Geoinformatics with R" />
+  <meta name="twitter:title" content="Chapter 7 Interpolation | Geoinformatics with R" />
   
   <meta name="twitter:description" content="Radon mapping concepts with examples" />
   
@@ -146,29 +146,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#r-session"><i class="fa fa-check"></i>R session</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="read-data.html"><a href="read-data.html"><i class="fa fa-check"></i><b>1</b> Read data</a>
+<li class="part"><span><b>I Indoor radon risk</b></span></li>
+<li class="chapter" data-level="1" data-path="radon.html"><a href="radon.html"><i class="fa fa-check"></i><b>1</b> Radon</a></li>
+<li class="part"><span><b>II R</b></span></li>
+<li class="chapter" data-level="2" data-path="r-for-spatial-data-analisys.html"><a href="r-for-spatial-data-analisys.html"><i class="fa fa-check"></i><b>2</b> R for spatial data analisys</a></li>
+<li class="chapter" data-level="3" data-path="part-data-simulation.html"><a href="part-data-simulation.html"><i class="fa fa-check"></i><b>3</b> (PART) Data simulation</a></li>
+<li class="chapter" data-level="4" data-path="indoor-radon.html"><a href="indoor-radon.html"><i class="fa fa-check"></i><b>4</b> Indoor radon</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="read-data.html"><a href="read-data.html#administrative-divisions"><i class="fa fa-check"></i><b>1.1</b> Administrative divisions (</a></li>
-<li class="chapter" data-level="1.2" data-path="read-data.html"><a href="read-data.html#grids-10-x-10-km"><i class="fa fa-check"></i><b>1.2</b> Grids 10 x 10 km</a></li>
-<li class="chapter" data-level="1.3" data-path="read-data.html"><a href="read-data.html#make-our-own-grid-e.g.-0.1-x-0.1-degrees"><i class="fa fa-check"></i><b>1.3</b> Make our own grid (e.g. 0.1 x 0.1 degrees)</a></li>
-<li class="chapter" data-level="1.4" data-path="read-data.html"><a href="read-data.html#geology-15m"><i class="fa fa-check"></i><b>1.4</b> Geology 1:5M</a></li>
-<li class="chapter" data-level="1.5" data-path="read-data.html"><a href="read-data.html#study-area"><i class="fa fa-check"></i><b>1.5</b> Study area</a></li>
-<li class="chapter" data-level="1.6" data-path="read-data.html"><a href="read-data.html#indoor-radon-simulated-data"><i class="fa fa-check"></i><b>1.6</b> Indoor radon (simulated data)</a></li>
+<li class="chapter" data-level="4.1" data-path="indoor-radon.html"><a href="indoor-radon.html#administrative-divisions"><i class="fa fa-check"></i><b>4.1</b> Administrative divisions</a></li>
+<li class="chapter" data-level="4.2" data-path="indoor-radon.html"><a href="indoor-radon.html#grids-10-x-10-km"><i class="fa fa-check"></i><b>4.2</b> Grids 10 x 10 km</a></li>
+<li class="chapter" data-level="4.3" data-path="indoor-radon.html"><a href="indoor-radon.html#make-our-own-grid-e.g.-0.1-x-0.1-degrees"><i class="fa fa-check"></i><b>4.3</b> Make our own grid (e.g. 0.1 x 0.1 degrees)</a></li>
+<li class="chapter" data-level="4.4" data-path="indoor-radon.html"><a href="indoor-radon.html#geology-15m"><i class="fa fa-check"></i><b>4.4</b> Geology 1:5M</a></li>
+<li class="chapter" data-level="4.5" data-path="indoor-radon.html"><a href="indoor-radon.html#study-area"><i class="fa fa-check"></i><b>4.5</b> Study area</a></li>
+<li class="chapter" data-level="4.6" data-path="indoor-radon.html"><a href="indoor-radon.html#indoor-radon-simulated-data"><i class="fa fa-check"></i><b>4.6</b> Indoor radon (simulated data)</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Exploratory data analysis</a>
+<li class="chapter" data-level="5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Exploratory data analysis</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#histogram-rn"><i class="fa fa-check"></i><b>2.1</b> Histogram (Rn)</a></li>
-<li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>2.2</b> Spatial distribution</a></li>
+<li class="chapter" data-level="5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#histogram-rn"><i class="fa fa-check"></i><b>5.1</b> Histogram (Rn)</a></li>
+<li class="chapter" data-level="5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>5.2</b> Spatial distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3</b> Summary statistics</a></li>
-<li class="part"><span><b>I Geostatistics</b></span></li>
-<li class="chapter" data-level="4" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>4</b> Interpolation</a>
+<li class="chapter" data-level="6" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>6</b> Summary statistics</a></li>
+<li class="part"><span><b>III Radon mapping</b></span></li>
+<li class="chapter" data-level="7" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>7</b> Interpolation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>4.1</b> Inverse distance weighted interpolation (IDW)</a></li>
-<li class="chapter" data-level="4.2" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>4.2</b> Ordinary Kriging</a></li>
+<li class="chapter" data-level="7.1" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>7.1</b> Inverse distance weighted interpolation (IDW)</a></li>
+<li class="chapter" data-level="7.2" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>7.2</b> Ordinary Kriging</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>5</b> Dose map</a></li>
-<li class="chapter" data-level="6" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>6</b> Interactive maps</a></li>
+<li class="chapter" data-level="8" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>8</b> Dose map</a></li>
+<li class="chapter" data-level="9" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>9</b> Interactive maps</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -190,8 +195,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="interpolation" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Interpolation</h1>
+<div id="interpolation" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Interpolation</h1>
 <p>Prediction by grids of 0.015 x 0.015 degrees</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="interpolation.html#cb87-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> <span class="fu">st_make_grid</span>(Country, <span class="at">cellsize =</span> .<span class="dv">015</span>, <span class="at">what =</span> <span class="st">&quot;polygons&quot;</span>)</span>
 <span id="cb87-2"><a href="interpolation.html#cb87-2" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(InRn_Pred)</span>
@@ -200,8 +205,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb87-5"><a href="interpolation.html#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(InRn_Pred, <span class="at">reset =</span> F)</span>
 <span id="cb87-6"><a href="interpolation.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPDF, <span class="at">add =</span> T, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/pred-grids-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div id="inverse-distance-weighted-interpolation-idw" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Inverse distance weighted interpolation (IDW)</h2>
+<div id="inverse-distance-weighted-interpolation-idw" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Inverse distance weighted interpolation (IDW)</h2>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="interpolation.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Optimal idp (10 k-fold Croos Validation) ----</span></span>
 <span id="cb88-2"><a href="interpolation.html#cb88-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> InRn_DL</span>
 <span id="cb88-3"><a href="interpolation.html#cb88-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
@@ -390,8 +395,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb94-14"><a href="interpolation.html#cb94-14" aria-hidden="true" tabindex="-1"></a>P_IDW_Pred</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/IDW-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="ordinary-kriging" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Ordinary Kriging</h2>
+<div id="ordinary-kriging" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Ordinary Kriging</h2>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="interpolation.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Variogram (gstat) ----</span></span>
 <span id="cb95-2"><a href="interpolation.html#cb95-2" aria-hidden="true" tabindex="-1"></a>vg <span class="ot">&lt;-</span> <span class="fu">variogram</span>(LogRn <span class="sc">~</span> <span class="dv">1</span>, InRn_DL)   <span class="co"># great-circle distances (km)</span></span>
 <span id="cb95-3"><a href="interpolation.html#cb95-3" aria-hidden="true" tabindex="-1"></a>vg_fit_Sph <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(vg, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Sph&quot;</span>))</span>
@@ -513,38 +518,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb108-4"><a href="interpolation.html#cb108-4" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span></span>
 <span id="cb108-5"><a href="interpolation.html#cb108-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>)</span>
 <span id="cb108-6"><a href="interpolation.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum)</span></code></pre></div>
-<pre><code>#    CELLCODE           EOFORIGIN         NOFORIGIN             Id        GID_0              NAME_0         
-#  Length:93          Min.   :5120000   Min.   :3610000   340    : 1   Length:93          Length:93         
-#  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1   Class :character   Class :character  
-#  Mode  :character   Median :5160000   Median :3670000   361    : 1   Mode  :character   Mode  :character  
-#                     Mean   :5163871   Mean   :3674516   362    : 1                                        
-#                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1                                        
-#                     Max.   :5210000   Max.   :3740000   364    : 1                                        
-#                                                         (Other):87                                        
-#       N.x            Case            AM            SD            GM           GSD            MIN       
-#  Min.   : 0.0   Min.   :0.00   Min.   :  3   Min.   :  1   Min.   :  2   Min.   :1.12   Min.   :  0.3  
-#  1st Qu.: 7.0   1st Qu.:0.00   1st Qu.: 19   1st Qu.: 19   1st Qu.: 11   1st Qu.:2.28   1st Qu.:  1.7  
-#  Median :12.0   Median :0.00   Median : 39   Median : 39   Median : 24   Median :2.75   Median :  4.2  
-#  Mean   :10.8   Mean   :0.77   Mean   : 69   Mean   : 68   Mean   : 45   Mean   :2.95   Mean   : 11.4  
-#  3rd Qu.:14.0   3rd Qu.:1.00   3rd Qu.: 86   3rd Qu.: 77   3rd Qu.: 54   3rd Qu.:3.44   3rd Qu.: 11.3  
-#  Max.   :22.0   Max.   :9.00   Max.   :687   Max.   :549   Max.   :472   Max.   :6.20   Max.   :143.2  
-#                 NA&#39;s   :7      NA&#39;s   :7     NA&#39;s   :11    NA&#39;s   :7     NA&#39;s   :11     NA&#39;s   :7      
-#       MAX            AM_brks        Prob          Prob_brks       N.y           IDW_AM        IDW_SD     
-#  Min.   :   5   [0,25)   :29   Min.   : 0.0   [0,1)    :29   Min.   : 1.0   Min.   :  9   Min.   :  1.1  
-#  1st Qu.:  59   [25,50)  :23   1st Qu.: 0.6   [1,5)    :28   1st Qu.:38.0   1st Qu.: 26   1st Qu.: 10.3  
-#  Median : 132   [50,75)  : 9   Median : 2.8   [5,10)   :13   Median :62.0   Median : 46   Median : 17.2  
-#  Mean   : 213   [75,100) : 9   Mean   : 7.6   [10,20)  :14   Mean   :48.8   Mean   : 67   Mean   : 30.6  
-#  3rd Qu.: 230   [100,200):12   3rd Qu.: 9.7   [20,30)  : 4   3rd Qu.:63.0   3rd Qu.: 84   3rd Qu.: 35.3  
-#  Max.   :1615   [200,687]: 4   Max.   :79.8   [30,79.8]: 5   Max.   :65.0   Max.   :425   Max.   :220.5  
-#  NA&#39;s   :7      NA&#39;s     : 7                                 NA&#39;s   :1      NA&#39;s   :1     NA&#39;s   :3      
-#      OK_AM         OK_SD               geometry.x              geometry.y               geometry 
-#  Min.   : 12   Min.   :  0.4   POLYGON      :93   GEOMETRYCOLLECTION: 7   GEOMETRYCOLLECTION: 1  
-#  1st Qu.: 25   1st Qu.:  4.8   epsg:4326    : 0   MULTIPOINT        :82   MULTIPOINT        :90  
-#  Median : 37   Median : 10.8   +proj=long...: 0   POINT             : 4   POINT             : 2  
-#  Mean   : 56   Mean   : 17.6                      epsg:4326         : 0   epsg:NA           : 0  
-#  3rd Qu.: 74   3rd Qu.: 19.8                      +proj=long...     : 0   +proj=long...     : 0  
-#  Max.   :340   Max.   :132.7                                                                     
-#  NA&#39;s   :1     NA&#39;s   :3</code></pre>
+<pre><code>#    CELLCODE           EOFORIGIN         NOFORIGIN             Id    
+#  Length:93          Min.   :5120000   Min.   :3610000   340    : 1  
+#  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1  
+#  Mode  :character   Median :5160000   Median :3670000   361    : 1  
+#                     Mean   :5163871   Mean   :3674516   362    : 1  
+#                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1  
+#                     Max.   :5210000   Max.   :3740000   364    : 1  
+#                                                         (Other):87  
+#     GID_0              NAME_0               N.x            Case     
+#  Length:93          Length:93          Min.   : 0.0   Min.   :0.00  
+#  Class :character   Class :character   1st Qu.: 7.0   1st Qu.:0.00  
+#  Mode  :character   Mode  :character   Median :12.0   Median :0.00  
+#                                        Mean   :10.8   Mean   :0.77  
+#                                        3rd Qu.:14.0   3rd Qu.:1.00  
+#                                        Max.   :22.0   Max.   :9.00  
+#                                                       NA&#39;s   :7     
+#        AM            SD            GM           GSD            MIN       
+#  Min.   :  3   Min.   :  1   Min.   :  2   Min.   :1.12   Min.   :  0.3  
+#  1st Qu.: 19   1st Qu.: 19   1st Qu.: 11   1st Qu.:2.28   1st Qu.:  1.7  
+#  Median : 39   Median : 39   Median : 24   Median :2.75   Median :  4.2  
+#  Mean   : 69   Mean   : 68   Mean   : 45   Mean   :2.95   Mean   : 11.4  
+#  3rd Qu.: 86   3rd Qu.: 77   3rd Qu.: 54   3rd Qu.:3.44   3rd Qu.: 11.3  
+#  Max.   :687   Max.   :549   Max.   :472   Max.   :6.20   Max.   :143.2  
+#  NA&#39;s   :7     NA&#39;s   :11    NA&#39;s   :7     NA&#39;s   :11     NA&#39;s   :7      
+#       MAX            AM_brks        Prob          Prob_brks       N.y      
+#  Min.   :   5   [0,25)   :29   Min.   : 0.0   [0,1)    :29   Min.   : 1.0  
+#  1st Qu.:  59   [25,50)  :23   1st Qu.: 0.6   [1,5)    :28   1st Qu.:38.0  
+#  Median : 132   [50,75)  : 9   Median : 2.8   [5,10)   :13   Median :62.0  
+#  Mean   : 213   [75,100) : 9   Mean   : 7.6   [10,20)  :14   Mean   :48.8  
+#  3rd Qu.: 230   [100,200):12   3rd Qu.: 9.7   [20,30)  : 4   3rd Qu.:63.0  
+#  Max.   :1615   [200,687]: 4   Max.   :79.8   [30,79.8]: 5   Max.   :65.0  
+#  NA&#39;s   :7      NA&#39;s     : 7                                 NA&#39;s   :1     
+#      IDW_AM        IDW_SD          OK_AM         OK_SD      
+#  Min.   :  9   Min.   :  1.1   Min.   : 12   Min.   :  0.4  
+#  1st Qu.: 26   1st Qu.: 10.3   1st Qu.: 25   1st Qu.:  4.8  
+#  Median : 46   Median : 17.2   Median : 37   Median : 10.8  
+#  Mean   : 67   Mean   : 30.6   Mean   : 56   Mean   : 17.6  
+#  3rd Qu.: 84   3rd Qu.: 35.3   3rd Qu.: 74   3rd Qu.: 19.8  
+#  Max.   :425   Max.   :220.5   Max.   :340   Max.   :132.7  
+#  NA&#39;s   :1     NA&#39;s   :3       NA&#39;s   :1     NA&#39;s   :3      
+#          geometry.x              geometry.y               geometry 
+#  POLYGON      :93   GEOMETRYCOLLECTION: 7   GEOMETRYCOLLECTION: 1  
+#  epsg:4326    : 0   MULTIPOINT        :82   MULTIPOINT        :90  
+#  +proj=long...: 0   POINT             : 4   POINT             : 2  
+#                     epsg:4326         : 0   epsg:NA           : 0  
+#                     +proj=long...     : 0   +proj=long...     : 0  
+#                                                                    
+# </code></pre>
 <p>Plot maps</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="interpolation.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
 <span id="cb110-2"><a href="interpolation.html#cb110-2" aria-hidden="true" tabindex="-1"></a>breaks_IDW <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>IDW_AM, <span class="at">na.rm =</span> T))</span>

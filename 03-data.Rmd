@@ -1,6 +1,10 @@
-# Read data 
+# (PART) Data simulation {-}
 
-## Administrative divisions (
+# Indoor radon
+
+Create a simulated dataset of indoor radon concentration with 3/4 geogenic factors (e.g. bedrock geology, aquifers - karst/No-karst, uranium in topsoil) and as spatial autocorrelation of the residuals, ...
+
+## Administrative divisions
 
 I got Lithuania from www.gadm.org, but you may download the administrative areas of other countries  
 
@@ -124,7 +128,7 @@ I will focus the data analysis in a region of of 1x1 degrees
 
 ```
 
-## Indoor radon (simulated data) 
+## Simulate indoor radon data 
 
 Please be aware that I am using SIMULATED data, and therefore data interpretation is NOT real. Any coincidence with a real case (i.e. Lithuania) is casual. Data are only useful for training purpose, you may need to read your own data for data interpretation.  
   

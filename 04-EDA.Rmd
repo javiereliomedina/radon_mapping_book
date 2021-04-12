@@ -1,6 +1,9 @@
+# (PART) Radon mapping {-}
+
 # Exploratory data analysis 
 
-## Histogram (Rn)
+## Histogram
+Rn
 ```{r hist}
 
 hist(InRn$Rn,
