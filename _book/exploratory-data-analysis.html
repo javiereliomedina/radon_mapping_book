@@ -164,7 +164,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Exploratory data analysis</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#histogram"><i class="fa fa-check"></i><b>4.1</b> Histogram</a></li>
-<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>4.2</b> Spatial distribution</a></li>
+<li class="chapter" data-level="4.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#missing-data"><i class="fa fa-check"></i><b>4.2</b> Missing data</a></li>
+<li class="chapter" data-level="4.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>4.3</b> Spatial distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>5</b> Summary statistics</a></li>
 <li class="chapter" data-level="6" data-path="geostatistics.html"><a href="geostatistics.html"><i class="fa fa-check"></i><b>6</b> Geostatistics</a>
@@ -232,6 +233,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="radon_mapping_book_files/figure-html/hist-log-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="exploratory-data-analysis.html#cb34-1" aria-hidden="true" tabindex="-1"></a>  StatDA<span class="sc">::</span><span class="fu">qqplot.das</span>(InRn<span class="sc">$</span>LogRn, <span class="at">distribution =</span> <span class="st">&quot;norm&quot;</span>, <span class="at">col =</span> <span class="dv">1</span>, <span class="at">envelope =</span> <span class="fl">0.95</span>,<span class="at">datax=</span>T, <span class="at">main =</span> <span class="st">&quot;Q-Q plot (log InRn)&quot;</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/hist-log-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="missing-data" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Missing data</h2>
+<p>Imputation of values below the detection limit</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="exploratory-data-analysis.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ROS: “ROBUST” IMPUTATION METHOD ----</span></span>
 <span id="cb35-2"><a href="exploratory-data-analysis.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  DL <span class="ot">&lt;-</span> <span class="dv">10</span> </span>
 <span id="cb35-3"><a href="exploratory-data-analysis.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  InRn_DL <span class="ot">&lt;-</span> InRn</span>
@@ -328,8 +333,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb58-30"><a href="exploratory-data-analysis.html#cb58-30" aria-hidden="true" tabindex="-1"></a>             <span class="at">xaxt =</span> <span class="st">&quot;s&quot;</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/hist-box-qqplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="spatial-distribution" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Spatial distribution</h2>
+<div id="spatial-distribution" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Spatial distribution</h2>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="exploratory-data-analysis.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot InRn measurements in Bq/m3 (with ggplot2) ----</span></span>
 <span id="cb59-2"><a href="exploratory-data-analysis.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  P_Rn <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb59-3"><a href="exploratory-data-analysis.html#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km) <span class="sc">+</span> </span>

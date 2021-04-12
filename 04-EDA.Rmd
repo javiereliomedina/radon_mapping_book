@@ -44,7 +44,9 @@ hist(InRn$Rn,
   StatDA::qqplot.das(InRn$LogRn, distribution = "norm", col = 1, envelope = 0.95,datax=T, main = "Q-Q plot (log InRn)")
 ```
 
+## Missing data 
 
+Imputation of values below the detection limit
 ```{r ROS}
 ## ROS: “ROBUST” IMPUTATION METHOD ----
   DL <- 10 

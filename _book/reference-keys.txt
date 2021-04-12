@@ -9,6 +9,7 @@ study-area
 simulate-indoor-radon-data
 exploratory-data-analysis
 histogram
+missing-data
 spatial-distribution
 summary-statistics
 geostatistics
