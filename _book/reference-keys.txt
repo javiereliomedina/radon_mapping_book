@@ -10,7 +10,6 @@ histogram-rn
 spatial-distribution
 summary-statistics
 interpolation
-prediction-by-grids-of-0.015-x-0.015-degrees
 inverse-distance-weighted-interpolation-idw
 ordinary-kriging
 dose-map

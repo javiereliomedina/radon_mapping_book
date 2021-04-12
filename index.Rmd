@@ -1,6 +1,7 @@
 --- 
-title: "Radon mapping with R"
-author: "Javier Elío"
+title: "Geoinformatics with R"
+subtitle: "Aplications for radon mapping"
+author: ["Javier Elío"]
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -43,8 +44,8 @@ The data have been analysed with **R** (version `r paste(R.Version()$major, R.Ve
   # List of packages 
   pkg <- c("tidyverse",
            "sf", 
-           "sp", 
-           "gstat"
+           "sp","
+           gstat"
            )
   # Check and install
   ipak(pkg)

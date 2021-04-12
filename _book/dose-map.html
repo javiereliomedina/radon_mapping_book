@@ -24,7 +24,7 @@
 <meta name="author" content="Javier Elío" />
 
 
-<meta name="date" content="2021-04-09" />
+<meta name="date" content="2021-04-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,11 +161,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#spatial-distribution"><i class="fa fa-check"></i><b>2.2</b> Spatial distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3</b> Summary statistics</a></li>
+<li class="part"><span><b>I Geostatistics</b></span></li>
 <li class="chapter" data-level="4" data-path="interpolation.html"><a href="interpolation.html"><i class="fa fa-check"></i><b>4</b> Interpolation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="interpolation.html"><a href="interpolation.html#prediction-by-grids-of-0.015-x-0.015-degrees"><i class="fa fa-check"></i><b>4.1</b> Prediction by grids of 0.015 x 0.015 degrees</a></li>
-<li class="chapter" data-level="4.2" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>4.2</b> Inverse distance weighted interpolation (IDW)</a></li>
-<li class="chapter" data-level="4.3" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>4.3</b> Ordinary Kriging</a></li>
+<li class="chapter" data-level="4.1" data-path="interpolation.html"><a href="interpolation.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>4.1</b> Inverse distance weighted interpolation (IDW)</a></li>
+<li class="chapter" data-level="4.2" data-path="interpolation.html"><a href="interpolation.html#ordinary-kriging"><i class="fa fa-check"></i><b>4.2</b> Ordinary Kriging</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>5</b> Dose map</a></li>
 <li class="chapter" data-level="6" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>6</b> Interactive maps</a></li>
@@ -192,72 +192,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="dose-map" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Dose map</h1>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="dose-map.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum<span class="sc">$</span>OK_AM)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="dose-map.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum<span class="sc">$</span>OK_AM)</span></code></pre></div>
 <pre><code>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
 #&gt;   11.89   24.73   37.41   56.30   74.17  340.36       1</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="dose-map.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum<span class="sc">$</span>OK_SD)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="dose-map.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum<span class="sc">$</span>OK_SD)</span></code></pre></div>
 <pre><code>#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA&#39;s 
 #&gt;   0.4458   4.8030  10.7934  17.5544  19.8067 132.7462        3</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="dose-map.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="do">## New dataframe with AM and SD ----</span></span>
-<span id="cb117-2"><a href="dose-map.html#cb117-2" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">transmute</span>(<span class="at">Id =</span> Id,</span>
-<span id="cb117-3"><a href="dose-map.html#cb117-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">Rn_AM =</span> OK_AM,</span>
-<span id="cb117-4"><a href="dose-map.html#cb117-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">Rn_SD =</span> OK_SD,</span>
-<span id="cb117-5"><a href="dose-map.html#cb117-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dose-map.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dose [mSv/y] = CRn [Bq/m3] * FE * FO * TY [h/y] * FD [mSv / Bq.h.m-3]</span></span>
-<span id="cb118-2"><a href="dose-map.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncertainty MC simulations</span></span>
-<span id="cb118-3"><a href="dose-map.html#cb118-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb118-4"><a href="dose-map.html#cb118-4" aria-hidden="true" tabindex="-1"></a>MC_Sim <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">length</span>(Dose<span class="sc">$</span>Rn_AM), <span class="at">ncol =</span> nsim)</span>
-<span id="cb118-5"><a href="dose-map.html#cb118-5" aria-hidden="true" tabindex="-1"></a>TY <span class="ot">&lt;-</span> <span class="dv">8760</span></span>
-<span id="cb118-6"><a href="dose-map.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb118-7"><a href="dose-map.html#cb118-7" aria-hidden="true" tabindex="-1"></a>  Rn <span class="ot">&lt;-</span> truncnorm<span class="sc">::</span><span class="fu">rtruncnorm</span>(<span class="fu">length</span>(Dose<span class="sc">$</span>Rn_AM), <span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="cn">Inf</span>, <span class="at">mean =</span> Dose<span class="sc">$</span>Rn_AM, <span class="at">sd =</span> Dose<span class="sc">$</span>Rn_SD)  <span class="co"># truncated:  Rn &gt; 0</span></span>
-<span id="cb118-8"><a href="dose-map.html#cb118-8" aria-hidden="true" tabindex="-1"></a>  FE <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="dv">1</span>, <span class="at">meanlog =</span> <span class="fu">log</span>(<span class="fl">0.4</span>), <span class="at">sdlog =</span> <span class="fu">log</span>(<span class="fl">1.15</span>))</span>
-<span id="cb118-9"><a href="dose-map.html#cb118-9" aria-hidden="true" tabindex="-1"></a>  FO <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, <span class="fl">0.03</span>)</span>
-<span id="cb118-10"><a href="dose-map.html#cb118-10" aria-hidden="true" tabindex="-1"></a>  FD <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">9e-06</span>, <span class="fl">1.5e-06</span>)</span>
-<span id="cb118-11"><a href="dose-map.html#cb118-11" aria-hidden="true" tabindex="-1"></a>  MC_Sim[,i] <span class="ot">&lt;-</span> Rn <span class="sc">*</span> FE <span class="sc">*</span> FO <span class="sc">*</span> TY <span class="sc">*</span> FD </span>
-<span id="cb118-12"><a href="dose-map.html#cb118-12" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb118-13"><a href="dose-map.html#cb118-13" aria-hidden="true" tabindex="-1"></a>MC_Sim <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(MC_Sim)</span>
-<span id="cb118-14"><a href="dose-map.html#cb118-14" aria-hidden="true" tabindex="-1"></a>MC_Sim<span class="sc">$</span>Id <span class="ot">&lt;-</span> Dose<span class="sc">$</span>Id</span>
-<span id="cb118-15"><a href="dose-map.html#cb118-15" aria-hidden="true" tabindex="-1"></a>MC_Sim<span class="sc">$</span>Dose_AM <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(MC_Sim[,<span class="dv">1</span><span class="sc">:</span>nsim])</span>
-<span id="cb118-16"><a href="dose-map.html#cb118-16" aria-hidden="true" tabindex="-1"></a>MC_Sim<span class="sc">$</span>Dose_SD <span class="ot">&lt;-</span> <span class="fu">apply</span>(MC_Sim[,<span class="dv">1</span><span class="sc">:</span>nsim], <span class="dv">1</span>, sd)</span></code></pre></div>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="dose-map.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Add AM and SD of the MC simulations to the dose table ----</span></span>
-<span id="cb119-2"><a href="dose-map.html#cb119-2" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> <span class="fu">left_join</span>(Dose <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(),</span>
-<span id="cb119-3"><a href="dose-map.html#cb119-3" aria-hidden="true" tabindex="-1"></a>                  MC_Sim[<span class="fu">c</span>(<span class="st">&quot;Id&quot;</span>,<span class="st">&quot;Dose_AM&quot;</span>,<span class="st">&quot;Dose_SD&quot;</span>)] <span class="sc">%&gt;%</span> as.data.frame,</span>
-<span id="cb119-4"><a href="dose-map.html#cb119-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">by =</span> <span class="st">&quot;Id&quot;</span>)</span>
-<span id="cb119-5"><a href="dose-map.html#cb119-5" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> Dose <span class="sc">%&gt;%</span> <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="dose-map.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dose map ----</span></span>
-<span id="cb120-2"><a href="dose-map.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Dose)</span></code></pre></div>
-<pre><code>#&gt;        Id         Rn_AM            Rn_SD             Dose_AM      
-#&gt;  340    : 1   Min.   : 11.89   Min.   :  0.4458   Min.   :0.2960  
-#&gt;  341    : 1   1st Qu.: 24.73   1st Qu.:  4.8030   1st Qu.:0.6017  
-#&gt;  361    : 1   Median : 37.41   Median : 10.7934   Median :0.9095  
-#&gt;  362    : 1   Mean   : 56.30   Mean   : 17.5544   Mean   :1.4174  
-#&gt;  363    : 1   3rd Qu.: 74.17   3rd Qu.: 19.8067   3rd Qu.:1.8008  
-#&gt;  364    : 1   Max.   :340.36   Max.   :132.7462   Max.   :8.6532  
-#&gt;  (Other):87   NA&#39;s   :1        NA&#39;s   :3          NA&#39;s   :3       
-#&gt;     Dose_SD                geometry.x
-#&gt;  Min.   :0.09389   POLYGON      :93  
-#&gt;  1st Qu.:0.21984   epsg:4326    : 0  
-#&gt;  Median :0.39444   +proj=long...: 0  
-#&gt;  Mean   :0.55571                     
-#&gt;  3rd Qu.:0.63535                     
-#&gt;  Max.   :4.02132                     
-#&gt;  NA&#39;s   :3</code></pre>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="dose-map.html#cb122-1" aria-hidden="true" tabindex="-1"></a>P_Dose_AM <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="dose-map.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="do">## New dataframe with AM and SD ----</span></span>
+<span id="cb116-2"><a href="dose-map.html#cb116-2" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">transmute</span>(<span class="at">Id =</span> Id,</span>
+<span id="cb116-3"><a href="dose-map.html#cb116-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">Rn_AM =</span> OK_AM,</span>
+<span id="cb116-4"><a href="dose-map.html#cb116-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">Rn_SD =</span> OK_SD,</span>
+<span id="cb116-5"><a href="dose-map.html#cb116-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="dose-map.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dose [mSv/y] = CRn [Bq/m3] * FE * FO * TY [h/y] * FD [mSv / Bq.h.m-3]</span></span>
+<span id="cb117-2"><a href="dose-map.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncertainty MC simulations</span></span>
+<span id="cb117-3"><a href="dose-map.html#cb117-3" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb117-4"><a href="dose-map.html#cb117-4" aria-hidden="true" tabindex="-1"></a>MC_Sim <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">length</span>(Dose<span class="sc">$</span>Rn_AM), <span class="at">ncol =</span> nsim)</span>
+<span id="cb117-5"><a href="dose-map.html#cb117-5" aria-hidden="true" tabindex="-1"></a>TY <span class="ot">&lt;-</span> <span class="dv">8760</span></span>
+<span id="cb117-6"><a href="dose-map.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb117-7"><a href="dose-map.html#cb117-7" aria-hidden="true" tabindex="-1"></a>  Rn <span class="ot">&lt;-</span> truncnorm<span class="sc">::</span><span class="fu">rtruncnorm</span>(<span class="fu">length</span>(Dose<span class="sc">$</span>Rn_AM), <span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="cn">Inf</span>, <span class="at">mean =</span> Dose<span class="sc">$</span>Rn_AM, <span class="at">sd =</span> Dose<span class="sc">$</span>Rn_SD)  <span class="co"># truncated:  Rn &gt; 0</span></span>
+<span id="cb117-8"><a href="dose-map.html#cb117-8" aria-hidden="true" tabindex="-1"></a>  FE <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="dv">1</span>, <span class="at">meanlog =</span> <span class="fu">log</span>(<span class="fl">0.4</span>), <span class="at">sdlog =</span> <span class="fu">log</span>(<span class="fl">1.15</span>))</span>
+<span id="cb117-9"><a href="dose-map.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  FO <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, <span class="fl">0.03</span>)</span>
+<span id="cb117-10"><a href="dose-map.html#cb117-10" aria-hidden="true" tabindex="-1"></a>  FD <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="fl">9e-06</span>, <span class="fl">1.5e-06</span>)</span>
+<span id="cb117-11"><a href="dose-map.html#cb117-11" aria-hidden="true" tabindex="-1"></a>  MC_Sim[,i] <span class="ot">&lt;-</span> Rn <span class="sc">*</span> FE <span class="sc">*</span> FO <span class="sc">*</span> TY <span class="sc">*</span> FD </span>
+<span id="cb117-12"><a href="dose-map.html#cb117-12" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb117-13"><a href="dose-map.html#cb117-13" aria-hidden="true" tabindex="-1"></a>MC_Sim <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(MC_Sim)</span>
+<span id="cb117-14"><a href="dose-map.html#cb117-14" aria-hidden="true" tabindex="-1"></a>MC_Sim<span class="sc">$</span>Id <span class="ot">&lt;-</span> Dose<span class="sc">$</span>Id</span>
+<span id="cb117-15"><a href="dose-map.html#cb117-15" aria-hidden="true" tabindex="-1"></a>MC_Sim<span class="sc">$</span>Dose_AM <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(MC_Sim[,<span class="dv">1</span><span class="sc">:</span>nsim])</span>
+<span id="cb117-16"><a href="dose-map.html#cb117-16" aria-hidden="true" tabindex="-1"></a>MC_Sim<span class="sc">$</span>Dose_SD <span class="ot">&lt;-</span> <span class="fu">apply</span>(MC_Sim[,<span class="dv">1</span><span class="sc">:</span>nsim], <span class="dv">1</span>, sd)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dose-map.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Add AM and SD of the MC simulations to the dose table ----</span></span>
+<span id="cb118-2"><a href="dose-map.html#cb118-2" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> <span class="fu">left_join</span>(Dose <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(),</span>
+<span id="cb118-3"><a href="dose-map.html#cb118-3" aria-hidden="true" tabindex="-1"></a>                  MC_Sim[<span class="fu">c</span>(<span class="st">&quot;Id&quot;</span>,<span class="st">&quot;Dose_AM&quot;</span>,<span class="st">&quot;Dose_SD&quot;</span>)] <span class="sc">%&gt;%</span> as.data.frame,</span>
+<span id="cb118-4"><a href="dose-map.html#cb118-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">by =</span> <span class="st">&quot;Id&quot;</span>)</span>
+<span id="cb118-5"><a href="dose-map.html#cb118-5" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> Dose <span class="sc">%&gt;%</span> <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="dose-map.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dose map ----</span></span>
+<span id="cb119-2"><a href="dose-map.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Dose)</span></code></pre></div>
+<pre><code>#&gt;        Id         Rn_AM            Rn_SD             Dose_AM          Dose_SD       
+#&gt;  340    : 1   Min.   : 11.89   Min.   :  0.4458   Min.   :0.2960   Min.   :0.09389  
+#&gt;  341    : 1   1st Qu.: 24.73   1st Qu.:  4.8030   1st Qu.:0.6017   1st Qu.:0.21984  
+#&gt;  361    : 1   Median : 37.41   Median : 10.7934   Median :0.9095   Median :0.39444  
+#&gt;  362    : 1   Mean   : 56.30   Mean   : 17.5544   Mean   :1.4174   Mean   :0.55571  
+#&gt;  363    : 1   3rd Qu.: 74.17   3rd Qu.: 19.8067   3rd Qu.:1.8008   3rd Qu.:0.63535  
+#&gt;  364    : 1   Max.   :340.36   Max.   :132.7462   Max.   :8.6532   Max.   :4.02132  
+#&gt;  (Other):87   NA&#39;s   :1        NA&#39;s   :3          NA&#39;s   :3        NA&#39;s   :3        
+#&gt;          geometry.x
+#&gt;  POLYGON      :93  
+#&gt;  epsg:4326    : 0  
+#&gt;  +proj=long...: 0  
+#&gt;                    
+#&gt;                    
+#&gt;                    
+#&gt; </code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="dose-map.html#cb121-1" aria-hidden="true" tabindex="-1"></a>P_Dose_AM <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb121-2"><a href="dose-map.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
+<span id="cb121-3"><a href="dose-map.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Dose, <span class="fu">aes</span>(<span class="at">fill =</span> Dose_AM)) <span class="sc">+</span></span>
+<span id="cb121-4"><a href="dose-map.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">&quot;mSv/y&quot;</span>, <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb121-5"><a href="dose-map.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Radiation dose - AM&quot;</span>)</span>
+<span id="cb121-6"><a href="dose-map.html#cb121-6" aria-hidden="true" tabindex="-1"></a>P_Dose_AM</span></code></pre></div>
+<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="dose-map.html#cb122-1" aria-hidden="true" tabindex="-1"></a>P_Dose_SD <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb122-2"><a href="dose-map.html#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
-<span id="cb122-3"><a href="dose-map.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Dose, <span class="fu">aes</span>(<span class="at">fill =</span> Dose_AM)) <span class="sc">+</span></span>
+<span id="cb122-3"><a href="dose-map.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Dose, <span class="fu">aes</span>(<span class="at">fill =</span> Dose_SD)) <span class="sc">+</span></span>
 <span id="cb122-4"><a href="dose-map.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">&quot;mSv/y&quot;</span>, <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb122-5"><a href="dose-map.html#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Radiation dose - AM&quot;</span>)</span>
-<span id="cb122-6"><a href="dose-map.html#cb122-6" aria-hidden="true" tabindex="-1"></a>P_Dose_AM</span></code></pre></div>
-<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="dose-map.html#cb123-1" aria-hidden="true" tabindex="-1"></a>P_Dose_SD <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb123-2"><a href="dose-map.html#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
-<span id="cb123-3"><a href="dose-map.html#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Dose, <span class="fu">aes</span>(<span class="at">fill =</span> Dose_SD)) <span class="sc">+</span></span>
-<span id="cb123-4"><a href="dose-map.html#cb123-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">&quot;mSv/y&quot;</span>, <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb123-5"><a href="dose-map.html#cb123-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Radiation dose - SD&quot;</span>)</span>
-<span id="cb123-6"><a href="dose-map.html#cb123-6" aria-hidden="true" tabindex="-1"></a>P_Dose_SD</span></code></pre></div>
-<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="dose-map.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(P_Dose_AM, P_Dose_SD, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-10-3.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb122-5"><a href="dose-map.html#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Radiation dose - SD&quot;</span>)</span>
+<span id="cb122-6"><a href="dose-map.html#cb122-6" aria-hidden="true" tabindex="-1"></a>P_Dose_SD</span></code></pre></div>
+<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="dose-map.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(P_Dose_AM, P_Dose_SD, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-12-3.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
             </section>
