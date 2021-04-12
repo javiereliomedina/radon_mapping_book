@@ -11,4 +11,4 @@ This work is licensed under a
 
 # Early draft of the book.
 
-Github repository: [here](https://github.com/javiereliomedina/radon_mapping_book.git)  
+Book link: [here](https://github.com/javiereliomedina/radon_mapping_book.git)  
