@@ -2,7 +2,7 @@
 
 # Radon
 
-- Introduction to radon and it adverse health effects.
+- Introduction to radon and its adverse health effects.
 
 - Radon and geology.
 
