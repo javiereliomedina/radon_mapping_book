@@ -31,8 +31,8 @@ The data have been analysed with **R** (version `r paste(R.Version()$major, R.Ve
   # List of packages 
   pkg <- c("tidyverse",
            "sf", 
-           "sp","
-           gstat"
+           "sp",
+           "gstat"
            )
   # Check and install
   ipak(pkg)

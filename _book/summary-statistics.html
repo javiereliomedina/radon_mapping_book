@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Summary statistics | Radon mapping with R</title>
+  <title>Chapter 3 Summary statistics | Geoinformatics with R</title>
   <meta name="description" content="Radon mapping concepts with examples" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Summary statistics | Radon mapping with R" />
+  <meta property="og:title" content="Chapter 3 Summary statistics | Geoinformatics with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Summary statistics | Radon mapping with R" />
+  <meta name="twitter:title" content="Chapter 3 Summary statistics | Geoinformatics with R" />
   
   <meta name="twitter:description" content="Radon mapping concepts with examples" />
   
@@ -139,7 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Geoinformatics with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Radon mapping with R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geoinformatics with R</a>
           </h1>
         </div>
 
@@ -195,22 +195,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="summary-statistics.html#cb74-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## InRn by grids of 10 x 10 km (summry: N, AM, SD, GM, GSD) ----</span></span>
 <span id="cb74-2"><a href="summary-statistics.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  InRn_DL <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(InRn_DL, Grids_10km) </span>
 <span id="cb74-3"><a href="summary-statistics.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>(InRn_DL)</span></code></pre></div>
-<pre><code>#&gt; Classes &#39;sf&#39; and &#39;data.frame&#39;:   1000 obs. of  12 variables:
-#&gt;  $ Rn       : num  5.113 0.785 1.763 6.323 36.349 ...
-#&gt;  $ LogRn    : num  1.632 -0.242 0.567 1.844 3.593 ...
-#&gt;  $ Rn_Cen   : logi  TRUE TRUE TRUE TRUE FALSE FALSE ...
-#&gt;  $ brks     : Factor w/ 6 levels &quot;[0,50)&quot;,&quot;[50,100)&quot;,..: 1 1 1 1 1 4 1 3 2 1 ...
-#&gt;  $ Case     : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 2 1 1 1 1 ...
-#&gt;  $ CELLCODE : chr  &quot;10kmE512N372&quot; &quot;10kmE513N367&quot; &quot;10kmE513N367&quot; &quot;10kmE513N367&quot; ...
-#&gt;  $ EOFORIGIN: num  5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
-#&gt;  $ NOFORIGIN: num  3720000 3670000 3670000 3670000 3680000 3680000 3680000 3680000 3680000 3690000 ...
-#&gt;  $ Id       : Factor w/ 1022 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 341 362 362 362 363 363 363 363 363 364 ...
-#&gt;  $ GID_0    : chr  &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; ...
-#&gt;  $ NAME_0   : chr  &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; ...
-#&gt;  $ geometry :sfc_POINT of length 1000; first list element:  &#39;XY&#39; num  23 56
-#&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry&quot;
-#&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:11] &quot;Rn&quot; &quot;LogRn&quot; &quot;Rn_Cen&quot; &quot;brks&quot; ...</code></pre>
+<pre><code># Classes &#39;sf&#39; and &#39;data.frame&#39;:    1000 obs. of  12 variables:
+#  $ Rn       : num  5.113 0.785 1.763 6.323 36.349 ...
+#  $ LogRn    : num  1.632 -0.242 0.567 1.844 3.593 ...
+#  $ Rn_Cen   : logi  TRUE TRUE TRUE TRUE FALSE FALSE ...
+#  $ brks     : Factor w/ 6 levels &quot;[0,50)&quot;,&quot;[50,100)&quot;,..: 1 1 1 1 1 4 1 3 2 1 ...
+#  $ Case     : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 2 1 1 1 1 ...
+#  $ CELLCODE : chr  &quot;10kmE512N372&quot; &quot;10kmE513N367&quot; &quot;10kmE513N367&quot; &quot;10kmE513N367&quot; ...
+#  $ EOFORIGIN: num  5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
+#  $ NOFORIGIN: num  3720000 3670000 3670000 3670000 3680000 3680000 3680000 3680000 3680000 3690000 ...
+#  $ Id       : Factor w/ 1022 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 341 362 362 362 363 363 363 363 363 364 ...
+#  $ GID_0    : chr  &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; ...
+#  $ NAME_0   : chr  &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; ...
+#  $ geometry :sfc_POINT of length 1000; first list element:  &#39;XY&#39; num  23 56
+#  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry&quot;
+#  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+#   ..- attr(*, &quot;names&quot;)= chr [1:11] &quot;Rn&quot; &quot;LogRn&quot; &quot;Rn_Cen&quot; &quot;brks&quot; ...</code></pre>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="summary-statistics.html#cb76-1" aria-hidden="true" tabindex="-1"></a>  InRn_DL<span class="sc">$</span>Case <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(InRn_DL<span class="sc">$</span>Case))</span>
 <span id="cb76-2"><a href="summary-statistics.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb76-3"><a href="summary-statistics.html#cb76-3" aria-hidden="true" tabindex="-1"></a>  InRn_Summary_Grids10km <span class="ot">&lt;-</span> InRn_DL <span class="sc">%&gt;%</span> </span>
@@ -230,38 +230,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb76-17"><a href="summary-statistics.html#cb76-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb76-18"><a href="summary-statistics.html#cb76-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">N =</span> <span class="fu">replace_na</span>(N, <span class="dv">0</span>))</span>
 <span id="cb76-19"><a href="summary-statistics.html#cb76-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(Grids_10km_Sum)</span></code></pre></div>
-<pre><code>#&gt;    CELLCODE           EOFORIGIN         NOFORIGIN             Id    
-#&gt;  Length:93          Min.   :5120000   Min.   :3610000   340    : 1  
-#&gt;  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1  
-#&gt;  Mode  :character   Median :5160000   Median :3670000   361    : 1  
-#&gt;                     Mean   :5163871   Mean   :3674516   362    : 1  
-#&gt;                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1  
-#&gt;                     Max.   :5210000   Max.   :3740000   364    : 1  
-#&gt;                                                         (Other):87  
-#&gt;     GID_0              NAME_0                N              Case       
-#&gt;  Length:93          Length:93          Min.   : 0.00   Min.   :0.0000  
-#&gt;  Class :character   Class :character   1st Qu.: 7.00   1st Qu.:0.0000  
-#&gt;  Mode  :character   Mode  :character   Median :12.00   Median :0.0000  
-#&gt;                                        Mean   :10.75   Mean   :0.7674  
-#&gt;                                        3rd Qu.:14.00   3rd Qu.:1.0000  
-#&gt;                                        Max.   :22.00   Max.   :9.0000  
-#&gt;                                                        NA&#39;s   :7       
-#&gt;        AM                SD                 GM               GSD       
-#&gt;  Min.   :  2.957   Min.   :  0.9767   Min.   :  2.061   Min.   :1.124  
-#&gt;  1st Qu.: 18.881   1st Qu.: 19.1492   1st Qu.: 11.320   1st Qu.:2.276  
-#&gt;  Median : 38.933   Median : 39.4056   Median : 24.043   Median :2.753  
-#&gt;  Mean   : 69.400   Mean   : 67.9795   Mean   : 44.716   Mean   :2.947  
-#&gt;  3rd Qu.: 85.645   3rd Qu.: 77.3011   3rd Qu.: 53.733   3rd Qu.:3.437  
-#&gt;  Max.   :686.712   Max.   :548.5429   Max.   :472.351   Max.   :6.198  
-#&gt;  NA&#39;s   :7         NA&#39;s   :11         NA&#39;s   :7         NA&#39;s   :11     
-#&gt;       MIN               MAX                   geometry.x              geometry.y
-#&gt;  Min.   :  0.323   Min.   :   5.012   POLYGON      :93   GEOMETRYCOLLECTION: 7  
-#&gt;  1st Qu.:  1.745   1st Qu.:  58.887   epsg:4326    : 0   MULTIPOINT        :82  
-#&gt;  Median :  4.233   Median : 131.628   +proj=long...: 0   POINT             : 4  
-#&gt;  Mean   : 11.410   Mean   : 212.524                      epsg:4326         : 0  
-#&gt;  3rd Qu.: 11.316   3rd Qu.: 230.376                      +proj=long...     : 0  
-#&gt;  Max.   :143.200   Max.   :1615.331                                             
-#&gt;  NA&#39;s   :7         NA&#39;s   :7</code></pre>
+<pre><code>#    CELLCODE           EOFORIGIN         NOFORIGIN             Id        GID_0              NAME_0         
+#  Length:93          Min.   :5120000   Min.   :3610000   340    : 1   Length:93          Length:93         
+#  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1   Class :character   Class :character  
+#  Mode  :character   Median :5160000   Median :3670000   361    : 1   Mode  :character   Mode  :character  
+#                     Mean   :5163871   Mean   :3674516   362    : 1                                        
+#                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1                                        
+#                     Max.   :5210000   Max.   :3740000   364    : 1                                        
+#                                                         (Other):87                                        
+#        N             Case            AM            SD            GM           GSD            MIN       
+#  Min.   : 0.0   Min.   :0.00   Min.   :  3   Min.   :  1   Min.   :  2   Min.   :1.12   Min.   :  0.3  
+#  1st Qu.: 7.0   1st Qu.:0.00   1st Qu.: 19   1st Qu.: 19   1st Qu.: 11   1st Qu.:2.28   1st Qu.:  1.7  
+#  Median :12.0   Median :0.00   Median : 39   Median : 39   Median : 24   Median :2.75   Median :  4.2  
+#  Mean   :10.8   Mean   :0.77   Mean   : 69   Mean   : 68   Mean   : 45   Mean   :2.95   Mean   : 11.4  
+#  3rd Qu.:14.0   3rd Qu.:1.00   3rd Qu.: 86   3rd Qu.: 77   3rd Qu.: 54   3rd Qu.:3.44   3rd Qu.: 11.3  
+#  Max.   :22.0   Max.   :9.00   Max.   :687   Max.   :549   Max.   :472   Max.   :6.20   Max.   :143.2  
+#                 NA&#39;s   :7      NA&#39;s   :7     NA&#39;s   :11    NA&#39;s   :7     NA&#39;s   :11     NA&#39;s   :7      
+#       MAX               geometry.x              geometry.y
+#  Min.   :   5   POLYGON      :93   GEOMETRYCOLLECTION: 7  
+#  1st Qu.:  59   epsg:4326    : 0   MULTIPOINT        :82  
+#  Median : 132   +proj=long...: 0   POINT             : 4  
+#  Mean   : 213                      epsg:4326         : 0  
+#  3rd Qu.: 230                      +proj=long...     : 0  
+#  Max.   :1615                                             
+#  NA&#39;s   :7</code></pre>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="summary-statistics.html#cb78-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Plot number of data in each grid cell ----</span></span>
 <span id="cb78-2"><a href="summary-statistics.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
 <span id="cb78-3"><a href="summary-statistics.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  P_Grids10km_N <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -273,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="radon_mapping_book_files/figure-html/sum-stat-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="summary-statistics.html#cb79-1" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Plot arithmetic mean ----</span></span>
 <span id="cb79-2"><a href="summary-statistics.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>AM, <span class="at">na.rm =</span> T)</span></code></pre></div>
-<pre><code>#&gt; [1] 686.7122</code></pre>
+<pre><code># [1] 687</code></pre>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="summary-statistics.html#cb81-1" aria-hidden="true" tabindex="-1"></a>  breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>AM, <span class="at">na.rm =</span> T))</span>
 <span id="cb81-2"><a href="summary-statistics.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">AM_brks =</span> <span class="fu">cut</span>(AM, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
 <span id="cb81-3"><a href="summary-statistics.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
@@ -289,30 +281,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb82-3"><a href="summary-statistics.html#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Based solely on the indoor radon measurements in each grid of 10x10 km,</span></span>
 <span id="cb82-4"><a href="summary-statistics.html#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and assuming data independence and lognormality</span></span>
 <span id="cb82-5"><a href="summary-statistics.html#cb82-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>(Grids_10km_Sum)</span></code></pre></div>
-<pre><code>#&gt; Classes &#39;sf&#39; and &#39;data.frame&#39;:   93 obs. of  17 variables:
-#&gt;  $ CELLCODE  : chr  &quot;10kmE512N371&quot; &quot;10kmE512N372&quot; &quot;10kmE513N366&quot; &quot;10kmE513N367&quot; ...
-#&gt;  $ EOFORIGIN : num  5120000 5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
-#&gt;  $ NOFORIGIN : num  3710000 3720000 3660000 3670000 3680000 3690000 3700000 3710000 3720000 3730000 ...
-#&gt;  $ Id        : Factor w/ 1022 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 340 341 361 362 363 364 365 366 367 368 ...
-#&gt;  $ GID_0     : chr  &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; ...
-#&gt;  $ NAME_0    : chr  &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; ...
-#&gt;  $ N         : num  0 1 0 3 5 12 19 15 10 0 ...
-#&gt;  $ Case      : num  NA 0 NA 0 1 0 0 0 0 NA ...
-#&gt;  $ AM        : num  NA 5.11 NA 2.96 97.47 ...
-#&gt;  $ SD        : num  NA NA NA 2.96 91.43 ...
-#&gt;  $ GM        : num  NA 5.11 NA 2.06 56.42 ...
-#&gt;  $ GSD       : num  NA NA NA 2.86 3.79 ...
-#&gt;  $ MIN       : num  NA 5.113 NA 0.785 8.032 ...
-#&gt;  $ MAX       : num  NA 5.11 NA 6.32 205.46 ...
-#&gt;  $ geometry.x:sfc_POLYGON of length 93; first list element: List of 1
-#&gt;   ..$ : num [1:4, 1:2] 23 23 23 23 55.9 ...
-#&gt;   ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;XY&quot; &quot;POLYGON&quot; &quot;sfg&quot;
-#&gt;  $ geometry.y:sfc_GEOMETRY of length 93; first list element:  list()
-#&gt;   ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;XY&quot; &quot;GEOMETRYCOLLECTION&quot; &quot;sfg&quot;
-#&gt;  $ AM_brks   : Factor w/ 6 levels &quot;[0,25)&quot;,&quot;[25,50)&quot;,..: NA 1 NA 1 4 1 1 2 1 NA ...
-#&gt;  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry.x&quot;
-#&gt;  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:15] &quot;CELLCODE&quot; &quot;EOFORIGIN&quot; &quot;NOFORIGIN&quot; &quot;Id&quot; ...</code></pre>
+<pre><code># Classes &#39;sf&#39; and &#39;data.frame&#39;:    93 obs. of  17 variables:
+#  $ CELLCODE  : chr  &quot;10kmE512N371&quot; &quot;10kmE512N372&quot; &quot;10kmE513N366&quot; &quot;10kmE513N367&quot; ...
+#  $ EOFORIGIN : num  5120000 5120000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 5130000 ...
+#  $ NOFORIGIN : num  3710000 3720000 3660000 3670000 3680000 3690000 3700000 3710000 3720000 3730000 ...
+#  $ Id        : Factor w/ 1022 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 340 341 361 362 363 364 365 366 367 368 ...
+#  $ GID_0     : chr  &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; &quot;LTU&quot; ...
+#  $ NAME_0    : chr  &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; &quot;Lithuania&quot; ...
+#  $ N         : num  0 1 0 3 5 12 19 15 10 0 ...
+#  $ Case      : num  NA 0 NA 0 1 0 0 0 0 NA ...
+#  $ AM        : num  NA 5.11 NA 2.96 97.47 ...
+#  $ SD        : num  NA NA NA 2.96 91.43 ...
+#  $ GM        : num  NA 5.11 NA 2.06 56.42 ...
+#  $ GSD       : num  NA NA NA 2.86 3.79 ...
+#  $ MIN       : num  NA 5.113 NA 0.785 8.032 ...
+#  $ MAX       : num  NA 5.11 NA 6.32 205.46 ...
+#  $ geometry.x:sfc_POLYGON of length 93; first list element: List of 1
+#   ..$ : num [1:4, 1:2] 23 23 23 23 55.9 ...
+#   ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;XY&quot; &quot;POLYGON&quot; &quot;sfg&quot;
+#  $ geometry.y:sfc_GEOMETRY of length 93; first list element:  list()
+#   ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;XY&quot; &quot;GEOMETRYCOLLECTION&quot; &quot;sfg&quot;
+#  $ AM_brks   : Factor w/ 6 levels &quot;[0,25)&quot;,&quot;[25,50)&quot;,..: NA 1 NA 1 4 1 1 2 1 NA ...
+#  - attr(*, &quot;sf_column&quot;)= chr &quot;geometry.x&quot;
+#  - attr(*, &quot;agr&quot;)= Factor w/ 3 levels &quot;constant&quot;,&quot;aggregate&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+#   ..- attr(*, &quot;names&quot;)= chr [1:15] &quot;CELLCODE&quot; &quot;EOFORIGIN&quot; &quot;NOFORIGIN&quot; &quot;Id&quot; ...</code></pre>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="summary-statistics.html#cb84-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1st: estimated Prob[InRn &gt; 200 Bq m-3]</span></span>
 <span id="cb84-2"><a href="summary-statistics.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  RL <span class="ot">&lt;-</span> <span class="dv">200</span></span>
 <span id="cb84-3"><a href="summary-statistics.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span></span>
@@ -326,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb84-11"><a href="summary-statistics.html#cb84-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">newdata =</span> <span class="fu">filter</span>(DCen, N <span class="sc">&lt;=</span> <span class="dv">5</span>),</span>
 <span id="cb84-12"><a href="summary-statistics.html#cb84-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">nmax =</span> <span class="dv">10</span>,</span>
 <span id="cb84-13"><a href="summary-statistics.html#cb84-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">idp =</span> <span class="dv">2</span> )</span></code></pre></div>
-<pre><code>#&gt; [inverse distance weighted interpolation]</code></pre>
+<pre><code># [inverse distance weighted interpolation]</code></pre>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="summary-statistics.html#cb86-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace values by the modeled values</span></span>
 <span id="cb86-2"><a href="summary-statistics.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Prob =</span> <span class="fu">replace</span>(Prob, N <span class="sc">&lt;=</span> <span class="dv">5</span>, Prob_IDW<span class="sc">$</span>var1.pred))</span>
 <span id="cb86-3"><a href="summary-statistics.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -397,8 +389,7 @@ gitbook.start({
 "download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
 "toc": {
 "collapse": "subsection"
-},
-"code_folding": "hide"
+}
 });
 });
 </script>

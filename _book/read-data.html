@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Read data | Radon mapping with R</title>
+  <title>Chapter 1 Read data | Geoinformatics with R</title>
   <meta name="description" content="Radon mapping concepts with examples" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Read data | Radon mapping with R" />
+  <meta property="og:title" content="Chapter 1 Read data | Geoinformatics with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Read data | Radon mapping with R" />
+  <meta name="twitter:title" content="Chapter 1 Read data | Geoinformatics with R" />
   
   <meta name="twitter:description" content="Radon mapping concepts with examples" />
   
@@ -139,7 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Geoinformatics with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Radon mapping with R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geoinformatics with R</a>
           </h1>
         </div>
 
@@ -213,107 +213,107 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-9"><a href="read-data.html#cb5-9" aria-hidden="true" tabindex="-1"></a>  Grids_10km<span class="sc">$</span>Id <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(Grids_10km<span class="sc">$</span>CELLCODE), <span class="dv">1</span>)   <span class="co"># Add new column with &quot;Id&quot;</span></span>
 <span id="cb5-10"><a href="read-data.html#cb5-10" aria-hidden="true" tabindex="-1"></a>  Grids_10km<span class="sc">$</span>Id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Grids_10km<span class="sc">$</span>Id)                 <span class="co"># Stored as a vector of integer values</span></span>
 <span id="cb5-11"><a href="read-data.html#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(Grids_10km)                                        <span class="co"># Coordinate Reference System</span></span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: ETRS89 / ETRS-LAEA 
-#&gt;   wkt:
-#&gt; PROJCRS[&quot;ETRS89 / ETRS-LAEA&quot;,
-#&gt;     BASEGEOGCRS[&quot;ETRS89&quot;,
-#&gt;         DATUM[&quot;European Terrestrial Reference System 1989&quot;,
-#&gt;             ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
-#&gt;                 LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;         PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         ID[&quot;EPSG&quot;,4258]],
-#&gt;     CONVERSION[&quot;unnamed&quot;,
-#&gt;         METHOD[&quot;Lambert Azimuthal Equal Area&quot;,
-#&gt;             ID[&quot;EPSG&quot;,9820]],
-#&gt;         PARAMETER[&quot;Latitude of natural origin&quot;,52,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
-#&gt;             ID[&quot;EPSG&quot;,8801]],
-#&gt;         PARAMETER[&quot;Longitude of natural origin&quot;,10,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
-#&gt;             ID[&quot;EPSG&quot;,8802]],
-#&gt;         PARAMETER[&quot;False easting&quot;,4321000,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1],
-#&gt;             ID[&quot;EPSG&quot;,8806]],
-#&gt;         PARAMETER[&quot;False northing&quot;,3210000,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1],
-#&gt;             ID[&quot;EPSG&quot;,8807]]],
-#&gt;     CS[Cartesian,2],
-#&gt;         AXIS[&quot;x&quot;,east,
-#&gt;             ORDER[1],
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]],
-#&gt;         AXIS[&quot;y&quot;,north,
-#&gt;             ORDER[2],
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]],
-#&gt;     ID[&quot;EPSG&quot;,3035]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: ETRS89 / ETRS-LAEA 
+#   wkt:
+# PROJCRS[&quot;ETRS89 / ETRS-LAEA&quot;,
+#     BASEGEOGCRS[&quot;ETRS89&quot;,
+#         DATUM[&quot;European Terrestrial Reference System 1989&quot;,
+#             ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
+#                 LENGTHUNIT[&quot;metre&quot;,1]]],
+#         PRIMEM[&quot;Greenwich&quot;,0,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         ID[&quot;EPSG&quot;,4258]],
+#     CONVERSION[&quot;unnamed&quot;,
+#         METHOD[&quot;Lambert Azimuthal Equal Area&quot;,
+#             ID[&quot;EPSG&quot;,9820]],
+#         PARAMETER[&quot;Latitude of natural origin&quot;,52,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+#             ID[&quot;EPSG&quot;,8801]],
+#         PARAMETER[&quot;Longitude of natural origin&quot;,10,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+#             ID[&quot;EPSG&quot;,8802]],
+#         PARAMETER[&quot;False easting&quot;,4321000,
+#             LENGTHUNIT[&quot;metre&quot;,1],
+#             ID[&quot;EPSG&quot;,8806]],
+#         PARAMETER[&quot;False northing&quot;,3210000,
+#             LENGTHUNIT[&quot;metre&quot;,1],
+#             ID[&quot;EPSG&quot;,8807]]],
+#     CS[Cartesian,2],
+#         AXIS[&quot;x&quot;,east,
+#             ORDER[1],
+#             LENGTHUNIT[&quot;metre&quot;,1]],
+#         AXIS[&quot;y&quot;,north,
+#             ORDER[2],
+#             LENGTHUNIT[&quot;metre&quot;,1]],
+#     ID[&quot;EPSG&quot;,3035]]</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="read-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(Country)                                           <span class="co"># Coordinate Reference System</span></span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: EPSG:4326 
-#&gt;   wkt:
-#&gt; GEOGCRS[&quot;WGS 84&quot;,
-#&gt;     DATUM[&quot;World Geodetic System 1984&quot;,
-#&gt;         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;     PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     CS[ellipsoidal,2],
-#&gt;         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
-#&gt;             ORDER[1],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
-#&gt;             ORDER[2],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     USAGE[
-#&gt;         SCOPE[&quot;Horizontal component of 3D system.&quot;],
-#&gt;         AREA[&quot;World.&quot;],
-#&gt;         BBOX[-90,-180,90,180]],
-#&gt;     ID[&quot;EPSG&quot;,4326]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: EPSG:4326 
+#   wkt:
+# GEOGCRS[&quot;WGS 84&quot;,
+#     DATUM[&quot;World Geodetic System 1984&quot;,
+#         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+#             LENGTHUNIT[&quot;metre&quot;,1]]],
+#     PRIMEM[&quot;Greenwich&quot;,0,
+#         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     CS[ellipsoidal,2],
+#         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
+#             ORDER[1],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
+#             ORDER[2],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     USAGE[
+#         SCOPE[&quot;Horizontal component of 3D system.&quot;],
+#         AREA[&quot;World.&quot;],
+#         BBOX[-90,-180,90,180]],
+#     ID[&quot;EPSG&quot;,4326]]</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="read-data.html#cb9-1" aria-hidden="true" tabindex="-1"></a>  Grids_10km <span class="ot">&lt;-</span> Grids_10km <span class="sc">%&gt;%</span> <span class="fu">st_transform</span>(<span class="dv">4326</span>)           <span class="co"># Trandform coordinate system (from  EPSG: 3035 to EPSG: 4326)</span></span>
 <span id="cb9-2"><a href="read-data.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(Grids_10km)                                        <span class="co"># Coordinate Reference System </span></span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: EPSG:4326 
-#&gt;   wkt:
-#&gt; GEOGCRS[&quot;WGS 84&quot;,
-#&gt;     DATUM[&quot;World Geodetic System 1984&quot;,
-#&gt;         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;     PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     CS[ellipsoidal,2],
-#&gt;         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
-#&gt;             ORDER[1],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
-#&gt;             ORDER[2],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     USAGE[
-#&gt;         SCOPE[&quot;Horizontal component of 3D system.&quot;],
-#&gt;         AREA[&quot;World.&quot;],
-#&gt;         BBOX[-90,-180,90,180]],
-#&gt;     ID[&quot;EPSG&quot;,4326]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: EPSG:4326 
+#   wkt:
+# GEOGCRS[&quot;WGS 84&quot;,
+#     DATUM[&quot;World Geodetic System 1984&quot;,
+#         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+#             LENGTHUNIT[&quot;metre&quot;,1]]],
+#     PRIMEM[&quot;Greenwich&quot;,0,
+#         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     CS[ellipsoidal,2],
+#         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
+#             ORDER[1],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
+#             ORDER[2],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     USAGE[
+#         SCOPE[&quot;Horizontal component of 3D system.&quot;],
+#         AREA[&quot;World.&quot;],
+#         BBOX[-90,-180,90,180]],
+#     ID[&quot;EPSG&quot;,4326]]</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="read-data.html#cb11-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(Country)                                           <span class="co"># Coordinate Reference System </span></span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: EPSG:4326 
-#&gt;   wkt:
-#&gt; GEOGCRS[&quot;WGS 84&quot;,
-#&gt;     DATUM[&quot;World Geodetic System 1984&quot;,
-#&gt;         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;     PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     CS[ellipsoidal,2],
-#&gt;         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
-#&gt;             ORDER[1],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
-#&gt;             ORDER[2],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     USAGE[
-#&gt;         SCOPE[&quot;Horizontal component of 3D system.&quot;],
-#&gt;         AREA[&quot;World.&quot;],
-#&gt;         BBOX[-90,-180,90,180]],
-#&gt;     ID[&quot;EPSG&quot;,4326]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: EPSG:4326 
+#   wkt:
+# GEOGCRS[&quot;WGS 84&quot;,
+#     DATUM[&quot;World Geodetic System 1984&quot;,
+#         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+#             LENGTHUNIT[&quot;metre&quot;,1]]],
+#     PRIMEM[&quot;Greenwich&quot;,0,
+#         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     CS[ellipsoidal,2],
+#         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
+#             ORDER[1],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
+#             ORDER[2],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     USAGE[
+#         SCOPE[&quot;Horizontal component of 3D system.&quot;],
+#         AREA[&quot;World.&quot;],
+#         BBOX[-90,-180,90,180]],
+#     ID[&quot;EPSG&quot;,4326]]</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="read-data.html#cb13-1" aria-hidden="true" tabindex="-1"></a>  Grids_10km <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(Grids_10km, Country)        <span class="co"># Grids in the country</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="read-data.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Grids_10km[<span class="st">&quot;Id&quot;</span>])</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/plot-grids-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -347,97 +347,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-7"><a href="read-data.html#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlink</span>(<span class="fu">c</span>(temp, temp2))</span>
 <span id="cb17-8"><a href="read-data.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb17-9"><a href="read-data.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(IGME5000)</span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: ETRS89-extended / LCC Europe 
-#&gt;   wkt:
-#&gt; PROJCRS[&quot;ETRS89-extended / LCC Europe&quot;,
-#&gt;     BASEGEOGCRS[&quot;ETRS89&quot;,
-#&gt;         DATUM[&quot;European Terrestrial Reference System 1989&quot;,
-#&gt;             ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
-#&gt;                 LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;         PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         ID[&quot;EPSG&quot;,4258]],
-#&gt;     CONVERSION[&quot;Europe Conformal 2001&quot;,
-#&gt;         METHOD[&quot;Lambert Conic Conformal (2SP)&quot;,
-#&gt;             ID[&quot;EPSG&quot;,9802]],
-#&gt;         PARAMETER[&quot;Latitude of false origin&quot;,52,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
-#&gt;             ID[&quot;EPSG&quot;,8821]],
-#&gt;         PARAMETER[&quot;Longitude of false origin&quot;,10,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
-#&gt;             ID[&quot;EPSG&quot;,8822]],
-#&gt;         PARAMETER[&quot;Latitude of 1st standard parallel&quot;,35,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
-#&gt;             ID[&quot;EPSG&quot;,8823]],
-#&gt;         PARAMETER[&quot;Latitude of 2nd standard parallel&quot;,65,
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
-#&gt;             ID[&quot;EPSG&quot;,8824]],
-#&gt;         PARAMETER[&quot;Easting at false origin&quot;,4000000,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1],
-#&gt;             ID[&quot;EPSG&quot;,8826]],
-#&gt;         PARAMETER[&quot;Northing at false origin&quot;,2800000,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1],
-#&gt;             ID[&quot;EPSG&quot;,8827]]],
-#&gt;     CS[Cartesian,2],
-#&gt;         AXIS[&quot;northing (N)&quot;,north,
-#&gt;             ORDER[1],
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]],
-#&gt;         AXIS[&quot;easting (E)&quot;,east,
-#&gt;             ORDER[2],
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]],
-#&gt;     USAGE[
-#&gt;         SCOPE[&quot;Conformal mapping at scales of 1:500,000 and smaller.&quot;],
-#&gt;         AREA[&quot;Europe - European Union (EU) countries and candidates. Europe - onshore and offshore: Albania; Andorra; Austria; Belgium; Bosnia and Herzegovina; Bulgaria; Croatia; Cyprus; Czechia; Denmark; Estonia; Faroe Islands; Finland; France; Germany; Gibraltar; Greece; Hungary; Iceland; Ireland; Italy; Kosovo; Latvia; Liechtenstein; Lithuania; Luxembourg; Malta; Monaco; Montenegro; Netherlands; North Macedonia; Norway including Svalbard and Jan Mayen; Poland; Portugal including Madeira and Azores; Romania; San Marino; Serbia; Slovakia; Slovenia; Spain including Canary Islands; Sweden; Switzerland; Turkey; United Kingdom (UK) including Channel Islands and Isle of Man; Vatican City State.&quot;],
-#&gt;         BBOX[24.6,-35.58,84.17,44.83]],
-#&gt;     ID[&quot;EPSG&quot;,3034]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: ETRS89-extended / LCC Europe 
+#   wkt:
+# PROJCRS[&quot;ETRS89-extended / LCC Europe&quot;,
+#     BASEGEOGCRS[&quot;ETRS89&quot;,
+#         DATUM[&quot;European Terrestrial Reference System 1989&quot;,
+#             ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
+#                 LENGTHUNIT[&quot;metre&quot;,1]]],
+#         PRIMEM[&quot;Greenwich&quot;,0,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         ID[&quot;EPSG&quot;,4258]],
+#     CONVERSION[&quot;Europe Conformal 2001&quot;,
+#         METHOD[&quot;Lambert Conic Conformal (2SP)&quot;,
+#             ID[&quot;EPSG&quot;,9802]],
+#         PARAMETER[&quot;Latitude of false origin&quot;,52,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+#             ID[&quot;EPSG&quot;,8821]],
+#         PARAMETER[&quot;Longitude of false origin&quot;,10,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+#             ID[&quot;EPSG&quot;,8822]],
+#         PARAMETER[&quot;Latitude of 1st standard parallel&quot;,35,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+#             ID[&quot;EPSG&quot;,8823]],
+#         PARAMETER[&quot;Latitude of 2nd standard parallel&quot;,65,
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],
+#             ID[&quot;EPSG&quot;,8824]],
+#         PARAMETER[&quot;Easting at false origin&quot;,4000000,
+#             LENGTHUNIT[&quot;metre&quot;,1],
+#             ID[&quot;EPSG&quot;,8826]],
+#         PARAMETER[&quot;Northing at false origin&quot;,2800000,
+#             LENGTHUNIT[&quot;metre&quot;,1],
+#             ID[&quot;EPSG&quot;,8827]]],
+#     CS[Cartesian,2],
+#         AXIS[&quot;northing (N)&quot;,north,
+#             ORDER[1],
+#             LENGTHUNIT[&quot;metre&quot;,1]],
+#         AXIS[&quot;easting (E)&quot;,east,
+#             ORDER[2],
+#             LENGTHUNIT[&quot;metre&quot;,1]],
+#     USAGE[
+#         SCOPE[&quot;Conformal mapping at scales of 1:500,000 and smaller.&quot;],
+#         AREA[&quot;Europe - European Union (EU) countries and candidates. Europe - onshore and offshore: Albania; Andorra; Austria; Belgium; Bosnia and Herzegovina; Bulgaria; Croatia; Cyprus; Czechia; Denmark; Estonia; Faroe Islands; Finland; France; Germany; Gibraltar; Greece; Hungary; Iceland; Ireland; Italy; Kosovo; Latvia; Liechtenstein; Lithuania; Luxembourg; Malta; Monaco; Montenegro; Netherlands; North Macedonia; Norway including Svalbard and Jan Mayen; Poland; Portugal including Madeira and Azores; Romania; San Marino; Serbia; Slovakia; Slovenia; Spain including Canary Islands; Sweden; Switzerland; Turkey; United Kingdom (UK) including Channel Islands and Isle of Man; Vatican City State.&quot;],
+#         BBOX[24.6,-35.58,84.17,44.83]],
+#     ID[&quot;EPSG&quot;,3034]]</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="read-data.html#cb19-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(Country)</span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: EPSG:4326 
-#&gt;   wkt:
-#&gt; GEOGCRS[&quot;WGS 84&quot;,
-#&gt;     DATUM[&quot;World Geodetic System 1984&quot;,
-#&gt;         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;     PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     CS[ellipsoidal,2],
-#&gt;         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
-#&gt;             ORDER[1],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
-#&gt;             ORDER[2],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     USAGE[
-#&gt;         SCOPE[&quot;Horizontal component of 3D system.&quot;],
-#&gt;         AREA[&quot;World.&quot;],
-#&gt;         BBOX[-90,-180,90,180]],
-#&gt;     ID[&quot;EPSG&quot;,4326]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: EPSG:4326 
+#   wkt:
+# GEOGCRS[&quot;WGS 84&quot;,
+#     DATUM[&quot;World Geodetic System 1984&quot;,
+#         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+#             LENGTHUNIT[&quot;metre&quot;,1]]],
+#     PRIMEM[&quot;Greenwich&quot;,0,
+#         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     CS[ellipsoidal,2],
+#         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
+#             ORDER[1],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
+#             ORDER[2],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     USAGE[
+#         SCOPE[&quot;Horizontal component of 3D system.&quot;],
+#         AREA[&quot;World.&quot;],
+#         BBOX[-90,-180,90,180]],
+#     ID[&quot;EPSG&quot;,4326]]</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="read-data.html#cb21-1" aria-hidden="true" tabindex="-1"></a>  IGME5000 <span class="ot">&lt;-</span> IGME5000 <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="read-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_transform</span>(<span class="dv">4326</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="read-data.html#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(Country)</span>
 <span id="cb21-4"><a href="read-data.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crs</span>(IGME5000)</span></code></pre></div>
-<pre><code>#&gt; Coordinate Reference System:
-#&gt;   User input: EPSG:4326 
-#&gt;   wkt:
-#&gt; GEOGCRS[&quot;WGS 84&quot;,
-#&gt;     DATUM[&quot;World Geodetic System 1984&quot;,
-#&gt;         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
-#&gt;             LENGTHUNIT[&quot;metre&quot;,1]]],
-#&gt;     PRIMEM[&quot;Greenwich&quot;,0,
-#&gt;         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     CS[ellipsoidal,2],
-#&gt;         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
-#&gt;             ORDER[1],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
-#&gt;             ORDER[2],
-#&gt;             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
-#&gt;     USAGE[
-#&gt;         SCOPE[&quot;Horizontal component of 3D system.&quot;],
-#&gt;         AREA[&quot;World.&quot;],
-#&gt;         BBOX[-90,-180,90,180]],
-#&gt;     ID[&quot;EPSG&quot;,4326]]</code></pre>
+<pre><code># Coordinate Reference System:
+#   User input: EPSG:4326 
+#   wkt:
+# GEOGCRS[&quot;WGS 84&quot;,
+#     DATUM[&quot;World Geodetic System 1984&quot;,
+#         ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,
+#             LENGTHUNIT[&quot;metre&quot;,1]]],
+#     PRIMEM[&quot;Greenwich&quot;,0,
+#         ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     CS[ellipsoidal,2],
+#         AXIS[&quot;geodetic latitude (Lat)&quot;,north,
+#             ORDER[1],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#         AXIS[&quot;geodetic longitude (Lon)&quot;,east,
+#             ORDER[2],
+#             ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],
+#     USAGE[
+#         SCOPE[&quot;Horizontal component of 3D system.&quot;],
+#         AREA[&quot;World.&quot;],
+#         BBOX[-90,-180,90,180]],
+#     ID[&quot;EPSG&quot;,4326]]</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="read-data.html#cb23-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(IGME5000[<span class="st">&quot;AgeName&quot;</span>])</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/BG-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
@@ -501,7 +501,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb26-26"><a href="read-data.html#cb26-26" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb26-27"><a href="read-data.html#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulations based on the gstat object</span></span>
 <span id="cb26-28"><a href="read-data.html#cb26-28" aria-hidden="true" tabindex="-1"></a>  points <span class="ot">&lt;-</span> <span class="fu">predict</span>(g_dummy, <span class="at">newdata =</span> points, <span class="at">nsim =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>#&gt; [using unconditional Gaussian simulation]</code></pre>
+<pre><code># [using unconditional Gaussian simulation]</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="read-data.html#cb28-1" aria-hidden="true" tabindex="-1"></a>  points<span class="sc">$</span>Rn    <span class="ot">&lt;-</span> <span class="fu">exp</span>(points<span class="sc">$</span>sim1)</span>
 <span id="cb28-2"><a href="read-data.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb28-3"><a href="read-data.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Final result: Simulated indoor radon dataset (InRn) in Bq m-3</span></span>
@@ -565,8 +565,7 @@ gitbook.start({
 "download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
 "toc": {
 "collapse": "subsection"
-},
-"code_folding": "hide"
+}
 });
 });
 </script>

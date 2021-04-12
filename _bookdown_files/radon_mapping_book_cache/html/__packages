@@ -9,17 +9,7 @@ dplyr
 stringr
 forcats
 sf
-ggspatial
 sp
-rgdal
-geoR
 gstat
-MASS
-sgeostat
-StatDA
-survival
-NADA
 gridExtra
 leaflet
-units
-truncnorm

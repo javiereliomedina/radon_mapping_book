@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Exploratory data analysis | Radon mapping with R</title>
+  <title>Chapter 2 Exploratory data analysis | Geoinformatics with R</title>
   <meta name="description" content="Radon mapping concepts with examples" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Exploratory data analysis | Radon mapping with R" />
+  <meta property="og:title" content="Chapter 2 Exploratory data analysis | Geoinformatics with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Exploratory data analysis | Radon mapping with R" />
+  <meta name="twitter:title" content="Chapter 2 Exploratory data analysis | Geoinformatics with R" />
   
   <meta name="twitter:description" content="Radon mapping concepts with examples" />
   
@@ -139,7 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Geoinformatics with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Radon mapping with R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geoinformatics with R</a>
           </h1>
         </div>
 
@@ -253,26 +253,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-14"><a href="exploratory-data-analysis.html#cb36-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">&quot;After ROS&quot;</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/qqplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="exploratory-data-analysis.html#cb37-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(InRn<span class="sc">$</span>Rn)</span></code></pre></div>
-<pre><code>#&gt; [1] 64.08896</code></pre>
+<pre><code># [1] 64.1</code></pre>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="exploratory-data-analysis.html#cb39-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>(InRn<span class="sc">$</span>Rn)  </span></code></pre></div>
-<pre><code>#&gt; [1] 126.327</code></pre>
+<pre><code># [1] 126</code></pre>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="exploratory-data-analysis.html#cb41-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="fu">mean</span>(InRn<span class="sc">$</span>LogRn))</span></code></pre></div>
-<pre><code>#&gt; [1] 25.74388</code></pre>
+<pre><code># [1] 25.7</code></pre>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="exploratory-data-analysis.html#cb43-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="fu">sd</span>(InRn<span class="sc">$</span>LogRn))</span></code></pre></div>
-<pre><code>#&gt; [1] 3.683979</code></pre>
+<pre><code># [1] 3.68</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="exploratory-data-analysis.html#cb45-1" aria-hidden="true" tabindex="-1"></a>  RL <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># Bq m-3</span></span>
 <span id="cb45-2"><a href="exploratory-data-analysis.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span><span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">log</span>(RL), <span class="at">mean =</span> <span class="fu">mean</span>(InRn<span class="sc">$</span>LogRn), <span class="at">sd =</span> <span class="fu">sd</span>(InRn<span class="sc">$</span>LogRn)))</span></code></pre></div>
-<pre><code>#&gt; [1] 5.795368</code></pre>
+<pre><code># [1] 5.8</code></pre>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="exploratory-data-analysis.html#cb47-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(InRn_DL<span class="sc">$</span>Rn)</span></code></pre></div>
-<pre><code>#&gt; [1] 64.13248</code></pre>
+<pre><code># [1] 64.1</code></pre>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="exploratory-data-analysis.html#cb49-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>(InRn_DL<span class="sc">$</span>Rn)  </span></code></pre></div>
-<pre><code>#&gt; [1] 126.3137</code></pre>
+<pre><code># [1] 126</code></pre>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="exploratory-data-analysis.html#cb51-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="fu">mean</span>(InRn_DL<span class="sc">$</span>LogRn))</span></code></pre></div>
-<pre><code>#&gt; [1] 24.76532</code></pre>
+<pre><code># [1] 24.8</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="exploratory-data-analysis.html#cb53-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(<span class="fu">sd</span>(InRn_DL<span class="sc">$</span>LogRn))</span></code></pre></div>
-<pre><code>#&gt; [1] 4.043691</code></pre>
+<pre><code># [1] 4.04</code></pre>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="exploratory-data-analysis.html#cb55-1" aria-hidden="true" tabindex="-1"></a>  <span class="dv">100</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(<span class="fu">log</span>(RL), <span class="at">mean =</span> <span class="fu">mean</span>(InRn_DL<span class="sc">$</span>LogRn), <span class="at">sd =</span> <span class="fu">sd</span>(InRn_DL<span class="sc">$</span>LogRn)))</span></code></pre></div>
-<pre><code>#&gt; [1] 6.744583</code></pre>
+<pre><code># [1] 6.74</code></pre>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="exploratory-data-analysis.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Histogram (logRn) ----</span></span>
 <span id="cb57-2"><a href="exploratory-data-analysis.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) </span>
 <span id="cb57-3"><a href="exploratory-data-analysis.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(InRn<span class="sc">$</span>LogRn,</span>
@@ -454,37 +454,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="exploratory-data-analysis.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA ----</span></span>
 <span id="cb70-2"><a href="exploratory-data-analysis.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  lm_BG <span class="ot">&lt;-</span> <span class="fu">lm</span>(LogRn <span class="sc">~</span> AgeName, InRn_DL_BG)</span>
 <span id="cb70-3"><a href="exploratory-data-analysis.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(lm_BG)</span></code></pre></div>
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = LogRn ~ AgeName, data = InRn_DL_BG)
-#&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -3.9519 -0.9035 -0.0294  0.9739  4.0480 
-#&gt; 
-#&gt; Coefficients:
-#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)              2.8219     0.1038  27.192  &lt; 2e-16 ***
-#&gt; AgeNameEarly Triassic    0.2549     0.1363   1.871 0.061688 .  
-#&gt; AgeNameLate Devonian     0.5174     0.1325   3.904 0.000101 ***
-#&gt; AgeNameLate Jurassic     0.8586     0.1366   6.283 4.96e-10 ***
-#&gt; AgeNameLate Permian     -0.2470     0.1838  -1.344 0.179315    
-#&gt; AgeNameMiddle Jurassic   0.7674     0.4641   1.653 0.098557 .  
-#&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#&gt; 
-#&gt; Residual standard error: 1.357 on 994 degrees of freedom
-#&gt; Multiple R-squared:  0.06134,    Adjusted R-squared:  0.05661 
-#&gt; F-statistic: 12.99 on 5 and 994 DF,  p-value: 2.894e-12</code></pre>
+<pre><code># 
+# Call:
+# lm(formula = LogRn ~ AgeName, data = InRn_DL_BG)
+# 
+# Residuals:
+#    Min     1Q Median     3Q    Max 
+# -3.952 -0.904 -0.029  0.974  4.048 
+# 
+# Coefficients:
+#                        Estimate Std. Error t value Pr(&gt;|t|)    
+# (Intercept)               2.822      0.104   27.19   &lt;2e-16 ***
+# AgeNameEarly Triassic     0.255      0.136    1.87   0.0617 .  
+# AgeNameLate Devonian      0.517      0.133    3.90   0.0001 ***
+# AgeNameLate Jurassic      0.859      0.137    6.28    5e-10 ***
+# AgeNameLate Permian      -0.247      0.184   -1.34   0.1793    
+# AgeNameMiddle Jurassic    0.767      0.464    1.65   0.0986 .  
+# ---
+# Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+# 
+# Residual standard error: 1.36 on 994 degrees of freedom
+# Multiple R-squared:  0.0613,  Adjusted R-squared:  0.0566 
+# F-statistic:   13 on 5 and 994 DF,  p-value: 2.89e-12</code></pre>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="exploratory-data-analysis.html#cb72-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>(lm_BG)</span></code></pre></div>
-<pre><code>#&gt; Analysis of Variance Table
-#&gt; 
-#&gt; Response: LogRn
-#&gt;            Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
-#&gt; AgeName     5  119.61 23.9222   12.99 2.894e-12 ***
-#&gt; Residuals 994 1830.49  1.8415                      
-#&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code># Analysis of Variance Table
+# 
+# Response: LogRn
+#            Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+# AgeName     5    120   23.92      13 2.9e-12 ***
+# Residuals 994   1830    1.84                    
+# ---
+# Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 
 </div>
 </div>
@@ -539,8 +539,7 @@ gitbook.start({
 "download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
 "toc": {
 "collapse": "subsection"
-},
-"code_folding": "hide"
+}
 });
 });
 </script>

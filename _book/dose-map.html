@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Dose map | Radon mapping with R</title>
+  <title>Chapter 5 Dose map | Geoinformatics with R</title>
   <meta name="description" content="Radon mapping concepts with examples" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Dose map | Radon mapping with R" />
+  <meta property="og:title" content="Chapter 5 Dose map | Geoinformatics with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Dose map | Radon mapping with R" />
+  <meta name="twitter:title" content="Chapter 5 Dose map | Geoinformatics with R" />
   
   <meta name="twitter:description" content="Radon mapping concepts with examples" />
   
@@ -139,7 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Geoinformatics with R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prerequisites</a>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Radon mapping with R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geoinformatics with R</a>
           </h1>
         </div>
 
@@ -193,11 +193,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="dose-map" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Dose map</h1>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="dose-map.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum<span class="sc">$</span>OK_AM)</span></code></pre></div>
-<pre><code>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-#&gt;   11.89   24.73   37.41   56.30   74.17  340.36       1</code></pre>
+<pre><code>#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+#      12      25      37      56      74     340       1</code></pre>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="dose-map.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum<span class="sc">$</span>OK_SD)</span></code></pre></div>
-<pre><code>#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA&#39;s 
-#&gt;   0.4458   4.8030  10.7934  17.5544  19.8067 132.7462        3</code></pre>
+<pre><code>#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+#     0.4     4.8    10.8    17.6    19.8   132.7       3</code></pre>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="dose-map.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="do">## New dataframe with AM and SD ----</span></span>
 <span id="cb116-2"><a href="dose-map.html#cb116-2" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">transmute</span>(<span class="at">Id =</span> Id,</span>
 <span id="cb116-3"><a href="dose-map.html#cb116-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">Rn_AM =</span> OK_AM,</span>
@@ -226,38 +226,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb118-5"><a href="dose-map.html#cb118-5" aria-hidden="true" tabindex="-1"></a>Dose <span class="ot">&lt;-</span> Dose <span class="sc">%&gt;%</span> <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="dose-map.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dose map ----</span></span>
 <span id="cb119-2"><a href="dose-map.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Dose)</span></code></pre></div>
-<pre><code>#&gt;        Id         Rn_AM            Rn_SD             Dose_AM          Dose_SD       
-#&gt;  340    : 1   Min.   : 11.89   Min.   :  0.4458   Min.   :0.2960   Min.   :0.09389  
-#&gt;  341    : 1   1st Qu.: 24.73   1st Qu.:  4.8030   1st Qu.:0.6017   1st Qu.:0.21984  
-#&gt;  361    : 1   Median : 37.41   Median : 10.7934   Median :0.9095   Median :0.39444  
-#&gt;  362    : 1   Mean   : 56.30   Mean   : 17.5544   Mean   :1.4174   Mean   :0.55571  
-#&gt;  363    : 1   3rd Qu.: 74.17   3rd Qu.: 19.8067   3rd Qu.:1.8008   3rd Qu.:0.63535  
-#&gt;  364    : 1   Max.   :340.36   Max.   :132.7462   Max.   :8.6532   Max.   :4.02132  
-#&gt;  (Other):87   NA&#39;s   :1        NA&#39;s   :3          NA&#39;s   :3        NA&#39;s   :3        
-#&gt;          geometry.x
-#&gt;  POLYGON      :93  
-#&gt;  epsg:4326    : 0  
-#&gt;  +proj=long...: 0  
-#&gt;                    
-#&gt;                    
-#&gt;                    
-#&gt; </code></pre>
+<pre><code>#        Id         Rn_AM         Rn_SD          Dose_AM        Dose_SD             geometry.x
+#  340    : 1   Min.   : 12   Min.   :  0.4   Min.   :0.30   Min.   :0.11   POLYGON      :93  
+#  341    : 1   1st Qu.: 25   1st Qu.:  4.8   1st Qu.:0.63   1st Qu.:0.22   epsg:4326    : 0  
+#  361    : 1   Median : 37   Median : 10.8   Median :0.96   Median :0.40   +proj=long...: 0  
+#  362    : 1   Mean   : 56   Mean   : 17.6   Mean   :1.44   Mean   :0.57                     
+#  363    : 1   3rd Qu.: 74   3rd Qu.: 19.8   3rd Qu.:1.84   3rd Qu.:0.65                     
+#  364    : 1   Max.   :340   Max.   :132.7   Max.   :8.71   Max.   :3.89                     
+#  (Other):87   NA&#39;s   :1     NA&#39;s   :3       NA&#39;s   :3      NA&#39;s   :3</code></pre>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="dose-map.html#cb121-1" aria-hidden="true" tabindex="-1"></a>P_Dose_AM <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb121-2"><a href="dose-map.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
 <span id="cb121-3"><a href="dose-map.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Dose, <span class="fu">aes</span>(<span class="at">fill =</span> Dose_AM)) <span class="sc">+</span></span>
 <span id="cb121-4"><a href="dose-map.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">&quot;mSv/y&quot;</span>, <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb121-5"><a href="dose-map.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Radiation dose - AM&quot;</span>)</span>
 <span id="cb121-6"><a href="dose-map.html#cb121-6" aria-hidden="true" tabindex="-1"></a>P_Dose_AM</span></code></pre></div>
-<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="dose-map.html#cb122-1" aria-hidden="true" tabindex="-1"></a>P_Dose_SD <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb122-2"><a href="dose-map.html#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
 <span id="cb122-3"><a href="dose-map.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Dose, <span class="fu">aes</span>(<span class="at">fill =</span> Dose_SD)) <span class="sc">+</span></span>
 <span id="cb122-4"><a href="dose-map.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">&quot;mSv/y&quot;</span>, <span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb122-5"><a href="dose-map.html#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Radiation dose - SD&quot;</span>)</span>
 <span id="cb122-6"><a href="dose-map.html#cb122-6" aria-hidden="true" tabindex="-1"></a>P_Dose_SD</span></code></pre></div>
-<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-16-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="dose-map.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(P_Dose_AM, P_Dose_SD, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-12-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="radon_mapping_book_files/figure-html/unnamed-chunk-16-3.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
             </section>
@@ -311,8 +303,7 @@ gitbook.start({
 "download": ["radon_mapping_book.pdf", "radon_mapping_book.epub"],
 "toc": {
 "collapse": "subsection"
-},
-"code_folding": "hide"
+}
 });
 });
 </script>
