@@ -4,6 +4,7 @@ subtitle: "Aplications for radon mapping"
 author: ["Javier Elío"]
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
+github-repo: javiereliomedina/radon_mapping_book
 documentclass: book
 bibliography: [library.bib, packages.bib]
 biblio-style: apalike
