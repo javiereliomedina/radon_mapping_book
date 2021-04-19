@@ -15,7 +15,6 @@ summary-statistics
 geostatistics
 inverse-distance-weighted-interpolation-idw
 ordinary-kriging
+sequential-gaussian-simulation
 dose-map
 interactive-maps
-sequential-gaussian-simulation-sgs
-sequential-gaussian-simulation
