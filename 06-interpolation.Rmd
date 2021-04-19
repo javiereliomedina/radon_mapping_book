@@ -243,3 +243,5 @@ grid.arrange(P_Grids10km_AM, P_Grids10km_IDW, P_Grids10km_OK, nrow = 1, ncol = 3
       
 ```
 
+## Sequential Gaussian Simulation
+

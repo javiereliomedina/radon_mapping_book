@@ -17,3 +17,5 @@ inverse-distance-weighted-interpolation-idw
 ordinary-kriging
 dose-map
 interactive-maps
+sequential-gaussian-simulation-sgs
+sequential-gaussian-simulation

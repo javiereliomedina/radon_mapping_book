@@ -21,9 +21,7 @@
   <meta name="twitter:description" content="Radon mapping concepts with examples" />
   
 
-<meta name="author" content="Javier Elío" />
-<meta name="author" content="Eric Petermann" />
-<meta name="author" content="Peter Bossew" />
+<meta name="author" content="Javier Elío, Eric Petermann, Peter Bossew" />
 
 
 <meta name="date" content="2021-04-19" />
@@ -53,14 +51,6 @@
 
 
 
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 
 
 <style type="text/css">
@@ -174,6 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="geostatistics.html"><a href="geostatistics.html#inverse-distance-weighted-interpolation-idw"><i class="fa fa-check"></i><b>6.1</b> Inverse distance weighted interpolation (IDW)</a></li>
 <li class="chapter" data-level="6.2" data-path="geostatistics.html"><a href="geostatistics.html#ordinary-kriging"><i class="fa fa-check"></i><b>6.2</b> Ordinary Kriging</a></li>
+<li class="chapter" data-level="6.3" data-path="geostatistics.html"><a href="geostatistics.html#sequential-gaussian-simulation"><i class="fa fa-check"></i><b>6.3</b> Sequential Gaussian Simulation</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="dose-map.html"><a href="dose-map.html"><i class="fa fa-check"></i><b>7</b> Dose map</a></li>
 <li class="chapter" data-level="8" data-path="interactive-maps.html"><a href="interactive-maps.html"><i class="fa fa-check"></i><b>8</b> Interactive maps</a></li>
@@ -201,38 +192,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="geostatistics" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Geostatistics</h1>
 <p>Prediction by grids of 0.015 x 0.015 degrees</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="geostatistics.html#cb87-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> <span class="fu">st_make_grid</span>(Country, <span class="at">cellsize =</span> .<span class="dv">015</span>, <span class="at">what =</span> <span class="st">&quot;polygons&quot;</span>)</span>
-<span id="cb87-2"><a href="geostatistics.html#cb87-2" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(InRn_Pred)</span>
-<span id="cb87-3"><a href="geostatistics.html#cb87-3" aria-hidden="true" tabindex="-1"></a>SPDF <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(InRn_Pred) <span class="co"># predict in the center of the grid </span></span>
-<span id="cb87-4"><a href="geostatistics.html#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-5"><a href="geostatistics.html#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(InRn_Pred, <span class="at">reset =</span> F)</span>
-<span id="cb87-6"><a href="geostatistics.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPDF, <span class="at">add =</span> T, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="geostatistics.html#cb1-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> <span class="fu">st_make_grid</span>(Country, <span class="at">cellsize =</span> .<span class="dv">015</span>, <span class="at">what =</span> <span class="st">&quot;polygons&quot;</span>)</span>
+<span id="cb1-2"><a href="geostatistics.html#cb1-2" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(InRn_Pred)</span>
+<span id="cb1-3"><a href="geostatistics.html#cb1-3" aria-hidden="true" tabindex="-1"></a>SPDF <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(InRn_Pred) <span class="co"># predict in the center of the grid </span></span>
+<span id="cb1-4"><a href="geostatistics.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="geostatistics.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(InRn_Pred, <span class="at">reset =</span> F)</span>
+<span id="cb1-6"><a href="geostatistics.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SPDF, <span class="at">add =</span> T, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/pred-grids-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="inverse-distance-weighted-interpolation-idw" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Inverse distance weighted interpolation (IDW)</h2>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="geostatistics.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Optimal idp (10 k-fold Croos Validation) ----</span></span>
-<span id="cb88-2"><a href="geostatistics.html#cb88-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> InRn_DL</span>
-<span id="cb88-3"><a href="geostatistics.html#cb88-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb88-4"><a href="geostatistics.html#cb88-4" aria-hidden="true" tabindex="-1"></a>IDP_RMSE <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb88-5"><a href="geostatistics.html#cb88-5" aria-hidden="true" tabindex="-1"></a>idp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="fl">0.25</span>)</span>
-<span id="cb88-6"><a href="geostatistics.html#cb88-6" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb88-7"><a href="geostatistics.html#cb88-7" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>k, <span class="at">size =</span> <span class="fu">length</span>(data<span class="sc">$</span>Rn), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb88-8"><a href="geostatistics.html#cb88-8" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,<span class="fu">length</span>(idp),<span class="dv">2</span>)</span>
-<span id="cb88-9"><a href="geostatistics.html#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(idp)) {</span>
-<span id="cb88-10"><a href="geostatistics.html#cb88-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
-<span id="cb88-11"><a href="geostatistics.html#cb88-11" aria-hidden="true" tabindex="-1"></a>    m_model <span class="ot">&lt;-</span> data[folds <span class="sc">!=</span> i, ]</span>
-<span id="cb88-12"><a href="geostatistics.html#cb88-12" aria-hidden="true" tabindex="-1"></a>    m_valid <span class="ot">&lt;-</span> data[folds <span class="sc">==</span> i, ]</span>
-<span id="cb88-13"><a href="geostatistics.html#cb88-13" aria-hidden="true" tabindex="-1"></a>    m_valid_pred <span class="ot">&lt;-</span> <span class="fu">idw</span>(Rn <span class="sc">~</span> <span class="dv">1</span> , m_model, m_valid,</span>
-<span id="cb88-14"><a href="geostatistics.html#cb88-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nmax =</span> <span class="dv">100</span>,</span>
-<span id="cb88-15"><a href="geostatistics.html#cb88-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">maxdist =</span> <span class="dv">40</span>,</span>
-<span id="cb88-16"><a href="geostatistics.html#cb88-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nmin =</span> <span class="dv">5</span>,</span>
-<span id="cb88-17"><a href="geostatistics.html#cb88-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">idp =</span> idp[j])</span>
-<span id="cb88-18"><a href="geostatistics.html#cb88-18" aria-hidden="true" tabindex="-1"></a>    res  <span class="ot">&lt;-</span> m_valid<span class="sc">$</span>Rn <span class="sc">-</span> m_valid_pred<span class="sc">$</span>var1.pred </span>
-<span id="cb88-19"><a href="geostatistics.html#cb88-19" aria-hidden="true" tabindex="-1"></a>    IDP_RMSE[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(res<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb88-20"><a href="geostatistics.html#cb88-20" aria-hidden="true" tabindex="-1"></a>  } </span>
-<span id="cb88-21"><a href="geostatistics.html#cb88-21" aria-hidden="true" tabindex="-1"></a>  CV[j,<span class="dv">1</span>] <span class="ot">&lt;-</span> idp[j]</span>
-<span id="cb88-22"><a href="geostatistics.html#cb88-22" aria-hidden="true" tabindex="-1"></a>  CV[j,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(IDP_RMSE<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb88-23"><a href="geostatistics.html#cb88-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="geostatistics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Optimal idp (10 k-fold Croos Validation) ----</span></span>
+<span id="cb2-2"><a href="geostatistics.html#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> InRn_DL</span>
+<span id="cb2-3"><a href="geostatistics.html#cb2-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
+<span id="cb2-4"><a href="geostatistics.html#cb2-4" aria-hidden="true" tabindex="-1"></a>IDP_RMSE <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
+<span id="cb2-5"><a href="geostatistics.html#cb2-5" aria-hidden="true" tabindex="-1"></a>idp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="fl">0.25</span>)</span>
+<span id="cb2-6"><a href="geostatistics.html#cb2-6" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-7"><a href="geostatistics.html#cb2-7" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>k, <span class="at">size =</span> <span class="fu">length</span>(data<span class="sc">$</span>Rn), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="geostatistics.html#cb2-8" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,<span class="fu">length</span>(idp),<span class="dv">2</span>)</span>
+<span id="cb2-9"><a href="geostatistics.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(idp)) {</span>
+<span id="cb2-10"><a href="geostatistics.html#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="cb2-11"><a href="geostatistics.html#cb2-11" aria-hidden="true" tabindex="-1"></a>    m_model <span class="ot">&lt;-</span> data[folds <span class="sc">!=</span> i, ]</span>
+<span id="cb2-12"><a href="geostatistics.html#cb2-12" aria-hidden="true" tabindex="-1"></a>    m_valid <span class="ot">&lt;-</span> data[folds <span class="sc">==</span> i, ]</span>
+<span id="cb2-13"><a href="geostatistics.html#cb2-13" aria-hidden="true" tabindex="-1"></a>    m_valid_pred <span class="ot">&lt;-</span> <span class="fu">idw</span>(Rn <span class="sc">~</span> <span class="dv">1</span> , m_model, m_valid,</span>
+<span id="cb2-14"><a href="geostatistics.html#cb2-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nmax =</span> <span class="dv">100</span>,</span>
+<span id="cb2-15"><a href="geostatistics.html#cb2-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">maxdist =</span> <span class="dv">40</span>,</span>
+<span id="cb2-16"><a href="geostatistics.html#cb2-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nmin =</span> <span class="dv">5</span>,</span>
+<span id="cb2-17"><a href="geostatistics.html#cb2-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">idp =</span> idp[j])</span>
+<span id="cb2-18"><a href="geostatistics.html#cb2-18" aria-hidden="true" tabindex="-1"></a>    res  <span class="ot">&lt;-</span> m_valid<span class="sc">$</span>Rn <span class="sc">-</span> m_valid_pred<span class="sc">$</span>var1.pred </span>
+<span id="cb2-19"><a href="geostatistics.html#cb2-19" aria-hidden="true" tabindex="-1"></a>    IDP_RMSE[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(res<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb2-20"><a href="geostatistics.html#cb2-20" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb2-21"><a href="geostatistics.html#cb2-21" aria-hidden="true" tabindex="-1"></a>  CV[j,<span class="dv">1</span>] <span class="ot">&lt;-</span> idp[j]</span>
+<span id="cb2-22"><a href="geostatistics.html#cb2-22" aria-hidden="true" tabindex="-1"></a>  CV[j,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(IDP_RMSE<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb2-23"><a href="geostatistics.html#cb2-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code># [inverse distance weighted interpolation]
 # [inverse distance weighted interpolation]
 # [inverse distance weighted interpolation]
@@ -363,133 +354,133 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 # [inverse distance weighted interpolation]
 # [inverse distance weighted interpolation]
 # [inverse distance weighted interpolation]</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="geostatistics.html#cb90-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(CV)</span>
-<span id="cb90-2"><a href="geostatistics.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CV) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;idp&quot;</span>,<span class="st">&quot;RSME&quot;</span>)</span>
-<span id="cb90-3"><a href="geostatistics.html#cb90-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-4"><a href="geostatistics.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(RSME <span class="sc">~</span> idp, CV)</span>
-<span id="cb90-5"><a href="geostatistics.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(RSME <span class="sc">~</span> idp, CV, <span class="at">col =</span> <span class="dv">2</span>)</span>
-<span id="cb90-6"><a href="geostatistics.html#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">labels =</span> F, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="fl">0.5</span>))</span>
-<span id="cb90-7"><a href="geostatistics.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="fl">0.25</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>, <span class="at">col=</span><span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb90-8"><a href="geostatistics.html#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">seq</span>(<span class="dv">100</span>,<span class="dv">200</span>,<span class="dv">2</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb90-9"><a href="geostatistics.html#cb90-9" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;10-fold cross-validation&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="geostatistics.html#cb4-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(CV)</span>
+<span id="cb4-2"><a href="geostatistics.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CV) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;idp&quot;</span>,<span class="st">&quot;RSME&quot;</span>)</span>
+<span id="cb4-3"><a href="geostatistics.html#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="geostatistics.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(RSME <span class="sc">~</span> idp, CV)</span>
+<span id="cb4-5"><a href="geostatistics.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(RSME <span class="sc">~</span> idp, CV, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb4-6"><a href="geostatistics.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">labels =</span> F, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="fl">0.5</span>))</span>
+<span id="cb4-7"><a href="geostatistics.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="fl">0.25</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>, <span class="at">col=</span><span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb4-8"><a href="geostatistics.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">seq</span>(<span class="dv">100</span>,<span class="dv">200</span>,<span class="dv">2</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb4-9"><a href="geostatistics.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;10-fold cross-validation&quot;</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/IDW-icp-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>IDW (optimal idp = 2)</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="geostatistics.html#cb91-1" aria-hidden="true" tabindex="-1"></a>Pred_IDW <span class="ot">&lt;-</span> <span class="fu">idw</span>(Rn <span class="sc">~</span> <span class="dv">1</span> , InRn_DL, SPDF,</span>
-<span id="cb91-2"><a href="geostatistics.html#cb91-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">nmax =</span> <span class="dv">100</span>,</span>
-<span id="cb91-3"><a href="geostatistics.html#cb91-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">maxdist =</span> <span class="dv">40</span>, <span class="co"># km; Unprojected data: great-circle distance; For projected data Euclidian distances are computed </span></span>
-<span id="cb91-4"><a href="geostatistics.html#cb91-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">nmin =</span> <span class="dv">5</span>,</span>
-<span id="cb91-5"><a href="geostatistics.html#cb91-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">idp =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="geostatistics.html#cb5-1" aria-hidden="true" tabindex="-1"></a>Pred_IDW <span class="ot">&lt;-</span> <span class="fu">idw</span>(Rn <span class="sc">~</span> <span class="dv">1</span> , InRn_DL, SPDF,</span>
+<span id="cb5-2"><a href="geostatistics.html#cb5-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">nmax =</span> <span class="dv">100</span>,</span>
+<span id="cb5-3"><a href="geostatistics.html#cb5-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">maxdist =</span> <span class="dv">40</span>, <span class="co"># km; Unprojected data: great-circle distance; For projected data Euclidian distances are computed </span></span>
+<span id="cb5-4"><a href="geostatistics.html#cb5-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">nmin =</span> <span class="dv">5</span>,</span>
+<span id="cb5-5"><a href="geostatistics.html#cb5-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">idp =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code># [inverse distance weighted interpolation]</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="geostatistics.html#cb93-1" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>IDW_Pred <span class="ot">&lt;-</span> Pred_IDW<span class="sc">$</span>var1.pred</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="geostatistics.html#cb7-1" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>IDW_Pred <span class="ot">&lt;-</span> Pred_IDW<span class="sc">$</span>var1.pred</span></code></pre></div>
 <p>Plot map (grids cells of 0.015 x 0.015 degrees)</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="geostatistics.html#cb94-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>IDW_Pred <span class="ot">&lt;-</span> Pred_IDW<span class="sc">$</span>var1.pred</span>
-<span id="cb94-2"><a href="geostatistics.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
-<span id="cb94-3"><a href="geostatistics.html#cb94-3" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">500</span>, <span class="fu">max</span>(InRn_Pred<span class="sc">$</span>IDW_Pred, <span class="at">na.rm =</span> T))</span>
-<span id="cb94-4"><a href="geostatistics.html#cb94-4" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> InRn_Pred <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">IDW_brks =</span> <span class="fu">cut</span>(IDW_Pred, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
-<span id="cb94-5"><a href="geostatistics.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predictions</span></span>
-<span id="cb94-6"><a href="geostatistics.html#cb94-6" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
-<span id="cb94-7"><a href="geostatistics.html#cb94-7" aria-hidden="true" tabindex="-1"></a>P_IDW_Pred <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb94-8"><a href="geostatistics.html#cb94-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span></span>
-<span id="cb94-9"><a href="geostatistics.html#cb94-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_Pred, <span class="fu">aes</span>(<span class="at">fill =</span> IDW_brks, <span class="at">color =</span> IDW_brks)) <span class="sc">+</span> </span>
-<span id="cb94-10"><a href="geostatistics.html#cb94-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb94-11"><a href="geostatistics.html#cb94-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb94-12"><a href="geostatistics.html#cb94-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_DL, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb94-13"><a href="geostatistics.html#cb94-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;IDW - Predictions&quot;</span>) </span>
-<span id="cb94-14"><a href="geostatistics.html#cb94-14" aria-hidden="true" tabindex="-1"></a>P_IDW_Pred</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="geostatistics.html#cb8-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>IDW_Pred <span class="ot">&lt;-</span> Pred_IDW<span class="sc">$</span>var1.pred</span>
+<span id="cb8-2"><a href="geostatistics.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
+<span id="cb8-3"><a href="geostatistics.html#cb8-3" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">500</span>, <span class="fu">max</span>(InRn_Pred<span class="sc">$</span>IDW_Pred, <span class="at">na.rm =</span> T))</span>
+<span id="cb8-4"><a href="geostatistics.html#cb8-4" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> InRn_Pred <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">IDW_brks =</span> <span class="fu">cut</span>(IDW_Pred, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
+<span id="cb8-5"><a href="geostatistics.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predictions</span></span>
+<span id="cb8-6"><a href="geostatistics.html#cb8-6" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
+<span id="cb8-7"><a href="geostatistics.html#cb8-7" aria-hidden="true" tabindex="-1"></a>P_IDW_Pred <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-8"><a href="geostatistics.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="geostatistics.html#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_Pred, <span class="fu">aes</span>(<span class="at">fill =</span> IDW_brks, <span class="at">color =</span> IDW_brks)) <span class="sc">+</span> </span>
+<span id="cb8-10"><a href="geostatistics.html#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="geostatistics.html#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="geostatistics.html#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_DL, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="geostatistics.html#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;IDW - Predictions&quot;</span>) </span>
+<span id="cb8-14"><a href="geostatistics.html#cb8-14" aria-hidden="true" tabindex="-1"></a>P_IDW_Pred</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/IDW-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="ordinary-kriging" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Ordinary Kriging</h2>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="geostatistics.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Variogram (gstat) ----</span></span>
-<span id="cb95-2"><a href="geostatistics.html#cb95-2" aria-hidden="true" tabindex="-1"></a>vg <span class="ot">&lt;-</span> <span class="fu">variogram</span>(LogRn <span class="sc">~</span> <span class="dv">1</span>, InRn_DL)   <span class="co"># great-circle distances (km)</span></span>
-<span id="cb95-3"><a href="geostatistics.html#cb95-3" aria-hidden="true" tabindex="-1"></a>vg_fit_Sph <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(vg, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Sph&quot;</span>))</span>
-<span id="cb95-4"><a href="geostatistics.html#cb95-4" aria-hidden="true" tabindex="-1"></a>vg_fit_Exp <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(vg, <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="geostatistics.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gamma <span class="sc">~</span> dist, vg,</span>
-<span id="cb96-2"><a href="geostatistics.html#cb96-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span><span class="sc">*</span><span class="fu">max</span>(vg<span class="sc">$</span>gamma)),</span>
-<span id="cb96-3"><a href="geostatistics.html#cb96-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="dv">1</span>,</span>
-<span id="cb96-4"><a href="geostatistics.html#cb96-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;semivariance&quot;</span>,</span>
-<span id="cb96-5"><a href="geostatistics.html#cb96-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&#39;distance&#39;</span>,</span>
-<span id="cb96-6"><a href="geostatistics.html#cb96-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Variogram&quot;</span>)</span>
-<span id="cb96-7"><a href="geostatistics.html#cb96-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-8"><a href="geostatistics.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">variogramLine</span>(vg_fit_Sph, <span class="dv">100</span>), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>) </span>
-<span id="cb96-9"><a href="geostatistics.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">variogramLine</span>(vg_fit_Exp, <span class="dv">100</span>), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="geostatistics.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Variogram (gstat) ----</span></span>
+<span id="cb9-2"><a href="geostatistics.html#cb9-2" aria-hidden="true" tabindex="-1"></a>vg <span class="ot">&lt;-</span> <span class="fu">variogram</span>(LogRn <span class="sc">~</span> <span class="dv">1</span>, InRn_DL)   <span class="co"># great-circle distances (km)</span></span>
+<span id="cb9-3"><a href="geostatistics.html#cb9-3" aria-hidden="true" tabindex="-1"></a>vg_fit_Sph <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(vg, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="st">&quot;Sph&quot;</span>))</span>
+<span id="cb9-4"><a href="geostatistics.html#cb9-4" aria-hidden="true" tabindex="-1"></a>vg_fit_Exp <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(vg, <span class="fu">vgm</span>(<span class="st">&quot;Exp&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="geostatistics.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gamma <span class="sc">~</span> dist, vg,</span>
+<span id="cb10-2"><a href="geostatistics.html#cb10-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span><span class="sc">*</span><span class="fu">max</span>(vg<span class="sc">$</span>gamma)),</span>
+<span id="cb10-3"><a href="geostatistics.html#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="dv">1</span>,</span>
+<span id="cb10-4"><a href="geostatistics.html#cb10-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;semivariance&quot;</span>,</span>
+<span id="cb10-5"><a href="geostatistics.html#cb10-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&#39;distance&#39;</span>,</span>
+<span id="cb10-6"><a href="geostatistics.html#cb10-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Variogram&quot;</span>)</span>
+<span id="cb10-7"><a href="geostatistics.html#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="geostatistics.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">variogramLine</span>(vg_fit_Sph, <span class="dv">100</span>), <span class="at">col =</span> <span class="st">&#39;red&#39;</span>) </span>
+<span id="cb10-9"><a href="geostatistics.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">variogramLine</span>(vg_fit_Exp, <span class="dv">100</span>), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/OK-variog-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="geostatistics.html#cb97-1" aria-hidden="true" tabindex="-1"></a>vg_fit <span class="ot">&lt;-</span> vg_fit_Exp</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="geostatistics.html#cb11-1" aria-hidden="true" tabindex="-1"></a>vg_fit <span class="ot">&lt;-</span> vg_fit_Exp</span></code></pre></div>
 <p>Test: Random permutations (100 random variograms)</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="geostatistics.html#cb98-1" aria-hidden="true" tabindex="-1"></a>V_Env <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb98-2"><a href="geostatistics.html#cb98-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb98-3"><a href="geostatistics.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
-<span id="cb98-4"><a href="geostatistics.html#cb98-4" aria-hidden="true" tabindex="-1"></a>  RP <span class="ot">&lt;-</span> InRn_DL</span>
-<span id="cb98-5"><a href="geostatistics.html#cb98-5" aria-hidden="true" tabindex="-1"></a>  RP<span class="sc">$</span>LogRn <span class="ot">&lt;-</span> <span class="fu">sample</span>(InRn_DL<span class="sc">$</span>LogRn)</span>
-<span id="cb98-6"><a href="geostatistics.html#cb98-6" aria-hidden="true" tabindex="-1"></a>  g_RP <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula =</span> LogRn <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> RP) </span>
-<span id="cb98-7"><a href="geostatistics.html#cb98-7" aria-hidden="true" tabindex="-1"></a>  vg_RP <span class="ot">&lt;-</span> <span class="fu">variogram</span>(g_RP, <span class="at">cressie =</span> F)</span>
-<span id="cb98-8"><a href="geostatistics.html#cb98-8" aria-hidden="true" tabindex="-1"></a>  V_Env[[i]] <span class="ot">&lt;-</span> vg_RP </span>
-<span id="cb98-9"><a href="geostatistics.html#cb98-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb98-10"><a href="geostatistics.html#cb98-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-11"><a href="geostatistics.html#cb98-11" aria-hidden="true" tabindex="-1"></a>vg_fit_Table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model =</span> vg_fit<span class="sc">$</span>model,</span>
-<span id="cb98-12"><a href="geostatistics.html#cb98-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">psill =</span> <span class="fu">round</span>(vg_fit<span class="sc">$</span>psill, <span class="dv">2</span>),</span>
-<span id="cb98-13"><a href="geostatistics.html#cb98-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">range =</span> <span class="fu">round</span>(vg_fit<span class="sc">$</span>range, <span class="dv">2</span>),</span>
-<span id="cb98-14"><a href="geostatistics.html#cb98-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">kappa =</span> <span class="fu">round</span>(vg_fit<span class="sc">$</span>kappa, <span class="dv">2</span>)</span>
-<span id="cb98-15"><a href="geostatistics.html#cb98-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb98-16"><a href="geostatistics.html#cb98-16" aria-hidden="true" tabindex="-1"></a>vg_Line <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">variogramLine</span>(vg_fit, <span class="at">maxdist =</span> <span class="fu">max</span>(vg<span class="sc">$</span>dist)), <span class="at">id =</span> <span class="st">&quot;Model&quot;</span>)</span>
-<span id="cb98-17"><a href="geostatistics.html#cb98-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-18"><a href="geostatistics.html#cb98-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vg, <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma, <span class="at">colour =</span> id)) <span class="sc">+</span></span>
-<span id="cb98-19"><a href="geostatistics.html#cb98-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">bind_rows</span>(V_Env, <span class="at">.id=</span><span class="st">&quot;df&quot;</span>), <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma, <span class="at">group =</span> df), <span class="at">colour=</span><span class="st">&quot;grey&quot;</span>) <span class="sc">+</span></span>
-<span id="cb98-20"><a href="geostatistics.html#cb98-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb98-21"><a href="geostatistics.html#cb98-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> vg_Line, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb98-22"><a href="geostatistics.html#cb98-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="fl">2.5</span>) <span class="sc">+</span> </span>
-<span id="cb98-23"><a href="geostatistics.html#cb98-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_custom</span>(<span class="fu">tableGrob</span>(vg_fit_Table,<span class="at">rows =</span> <span class="cn">NULL</span>),</span>
-<span id="cb98-24"><a href="geostatistics.html#cb98-24" aria-hidden="true" tabindex="-1"></a>                    <span class="at">xmin =</span> <span class="dv">20</span>, <span class="at">xmax =</span> <span class="dv">45</span>, <span class="at">ymin =</span> <span class="fl">0.1</span>, <span class="at">ymax =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb98-25"><a href="geostatistics.html#cb98-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Variogram&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="geostatistics.html#cb12-1" aria-hidden="true" tabindex="-1"></a>V_Env <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb12-2"><a href="geostatistics.html#cb12-2" aria-hidden="true" tabindex="-1"></a>nsim <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb12-3"><a href="geostatistics.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
+<span id="cb12-4"><a href="geostatistics.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  RP <span class="ot">&lt;-</span> InRn_DL</span>
+<span id="cb12-5"><a href="geostatistics.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  RP<span class="sc">$</span>LogRn <span class="ot">&lt;-</span> <span class="fu">sample</span>(InRn_DL<span class="sc">$</span>LogRn)</span>
+<span id="cb12-6"><a href="geostatistics.html#cb12-6" aria-hidden="true" tabindex="-1"></a>  g_RP <span class="ot">&lt;-</span> <span class="fu">gstat</span>(<span class="at">formula =</span> LogRn <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> RP) </span>
+<span id="cb12-7"><a href="geostatistics.html#cb12-7" aria-hidden="true" tabindex="-1"></a>  vg_RP <span class="ot">&lt;-</span> <span class="fu">variogram</span>(g_RP, <span class="at">cressie =</span> F)</span>
+<span id="cb12-8"><a href="geostatistics.html#cb12-8" aria-hidden="true" tabindex="-1"></a>  V_Env[[i]] <span class="ot">&lt;-</span> vg_RP </span>
+<span id="cb12-9"><a href="geostatistics.html#cb12-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-10"><a href="geostatistics.html#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="geostatistics.html#cb12-11" aria-hidden="true" tabindex="-1"></a>vg_fit_Table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model =</span> vg_fit<span class="sc">$</span>model,</span>
+<span id="cb12-12"><a href="geostatistics.html#cb12-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">psill =</span> <span class="fu">round</span>(vg_fit<span class="sc">$</span>psill, <span class="dv">2</span>),</span>
+<span id="cb12-13"><a href="geostatistics.html#cb12-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">range =</span> <span class="fu">round</span>(vg_fit<span class="sc">$</span>range, <span class="dv">2</span>),</span>
+<span id="cb12-14"><a href="geostatistics.html#cb12-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">kappa =</span> <span class="fu">round</span>(vg_fit<span class="sc">$</span>kappa, <span class="dv">2</span>)</span>
+<span id="cb12-15"><a href="geostatistics.html#cb12-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-16"><a href="geostatistics.html#cb12-16" aria-hidden="true" tabindex="-1"></a>vg_Line <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">variogramLine</span>(vg_fit, <span class="at">maxdist =</span> <span class="fu">max</span>(vg<span class="sc">$</span>dist)), <span class="at">id =</span> <span class="st">&quot;Model&quot;</span>)</span>
+<span id="cb12-17"><a href="geostatistics.html#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="geostatistics.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vg, <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma, <span class="at">colour =</span> id)) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="geostatistics.html#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">bind_rows</span>(V_Env, <span class="at">.id=</span><span class="st">&quot;df&quot;</span>), <span class="fu">aes</span>(<span class="at">x =</span> dist, <span class="at">y =</span> gamma, <span class="at">group =</span> df), <span class="at">colour=</span><span class="st">&quot;grey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-20"><a href="geostatistics.html#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-21"><a href="geostatistics.html#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> vg_Line, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb12-22"><a href="geostatistics.html#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="fl">2.5</span>) <span class="sc">+</span> </span>
+<span id="cb12-23"><a href="geostatistics.html#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_custom</span>(<span class="fu">tableGrob</span>(vg_fit_Table,<span class="at">rows =</span> <span class="cn">NULL</span>),</span>
+<span id="cb12-24"><a href="geostatistics.html#cb12-24" aria-hidden="true" tabindex="-1"></a>                    <span class="at">xmin =</span> <span class="dv">20</span>, <span class="at">xmax =</span> <span class="dv">45</span>, <span class="at">ymin =</span> <span class="fl">0.1</span>, <span class="at">ymax =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb12-25"><a href="geostatistics.html#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Variogram&quot;</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/OK-vg-random-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Interpolation - TransGaussian kriging using Box-Cox transforms (gstat) —-</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="geostatistics.html#cb99-1" aria-hidden="true" tabindex="-1"></a>SPDF <span class="ot">&lt;-</span> <span class="fu">as_Spatial</span>(SPDF)</span>
-<span id="cb99-2"><a href="geostatistics.html#cb99-2" aria-hidden="true" tabindex="-1"></a>InRn_DL <span class="ot">&lt;-</span> <span class="fu">as_Spatial</span>(InRn_DL)</span>
-<span id="cb99-3"><a href="geostatistics.html#cb99-3" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb99-4"><a href="geostatistics.html#cb99-4" aria-hidden="true" tabindex="-1"></a>Pred_OK <span class="ot">&lt;-</span> <span class="fu">krigeTg</span>(Rn <span class="sc">~</span> <span class="dv">1</span>, InRn_DL, SPDF,</span>
-<span id="cb99-5"><a href="geostatistics.html#cb99-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">model =</span> vg_fit,</span>
-<span id="cb99-6"><a href="geostatistics.html#cb99-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lambda =</span> lambda,</span>
-<span id="cb99-7"><a href="geostatistics.html#cb99-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">maxdist =</span> <span class="dv">40</span>,  <span class="co"># km (great-circle distances)</span></span>
-<span id="cb99-8"><a href="geostatistics.html#cb99-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nmax =</span> <span class="dv">100</span>,</span>
-<span id="cb99-9"><a href="geostatistics.html#cb99-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nmin =</span> <span class="dv">5</span>)   </span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="geostatistics.html#cb13-1" aria-hidden="true" tabindex="-1"></a>SPDF <span class="ot">&lt;-</span> <span class="fu">as_Spatial</span>(SPDF)</span>
+<span id="cb13-2"><a href="geostatistics.html#cb13-2" aria-hidden="true" tabindex="-1"></a>InRn_DL <span class="ot">&lt;-</span> <span class="fu">as_Spatial</span>(InRn_DL)</span>
+<span id="cb13-3"><a href="geostatistics.html#cb13-3" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb13-4"><a href="geostatistics.html#cb13-4" aria-hidden="true" tabindex="-1"></a>Pred_OK <span class="ot">&lt;-</span> <span class="fu">krigeTg</span>(Rn <span class="sc">~</span> <span class="dv">1</span>, InRn_DL, SPDF,</span>
+<span id="cb13-5"><a href="geostatistics.html#cb13-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">model =</span> vg_fit,</span>
+<span id="cb13-6"><a href="geostatistics.html#cb13-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lambda =</span> lambda,</span>
+<span id="cb13-7"><a href="geostatistics.html#cb13-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">maxdist =</span> <span class="dv">40</span>,  <span class="co"># km (great-circle distances)</span></span>
+<span id="cb13-8"><a href="geostatistics.html#cb13-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nmax =</span> <span class="dv">100</span>,</span>
+<span id="cb13-9"><a href="geostatistics.html#cb13-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nmin =</span> <span class="dv">5</span>)   </span></code></pre></div>
 <pre><code># [using ordinary kriging]
 # [generalized least squares trend estimation]
 # [using simple kriging]</code></pre>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="geostatistics.html#cb101-1" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>OK_Pred <span class="ot">&lt;-</span> Pred_OK<span class="sc">$</span>var1TG.pred   </span>
-<span id="cb101-2"><a href="geostatistics.html#cb101-2" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>OK_SD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)</span>
-<span id="cb101-3"><a href="geostatistics.html#cb101-3" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>OK_RSD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)<span class="sc">/</span>Pred_OK<span class="sc">$</span>var1TG.pred</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="geostatistics.html#cb15-1" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>OK_Pred <span class="ot">&lt;-</span> Pred_OK<span class="sc">$</span>var1TG.pred   </span>
+<span id="cb15-2"><a href="geostatistics.html#cb15-2" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>OK_SD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)</span>
+<span id="cb15-3"><a href="geostatistics.html#cb15-3" aria-hidden="true" tabindex="-1"></a>SPDF<span class="sc">$</span>OK_RSD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)<span class="sc">/</span>Pred_OK<span class="sc">$</span>var1TG.pred</span></code></pre></div>
 <p>Plot predictions (grids cells of 0.025 x 0.025 degrees)</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="geostatistics.html#cb102-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>OK_Pred <span class="ot">&lt;-</span> Pred_OK<span class="sc">$</span>var1TG.pred   </span>
-<span id="cb102-2"><a href="geostatistics.html#cb102-2" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>OK_SD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)</span>
-<span id="cb102-3"><a href="geostatistics.html#cb102-3" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>OK_RSD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)<span class="sc">/</span>Pred_OK<span class="sc">$</span>var1TG.pred</span>
-<span id="cb102-4"><a href="geostatistics.html#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Back to sf format</span></span>
-<span id="cb102-5"><a href="geostatistics.html#cb102-5" aria-hidden="true" tabindex="-1"></a>InRn_DL <span class="ot">&lt;-</span> <span class="fu">as</span>(InRn_DL, <span class="st">&quot;sf&quot;</span>)</span>
-<span id="cb102-6"><a href="geostatistics.html#cb102-6" aria-hidden="true" tabindex="-1"></a>SPDF <span class="ot">&lt;-</span> <span class="fu">as</span>(SPDF, <span class="st">&quot;sf&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="geostatistics.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
-<span id="cb103-2"><a href="geostatistics.html#cb103-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">500</span>, <span class="fu">max</span>(InRn_Pred<span class="sc">$</span>OK_Pred, <span class="at">na.rm =</span> T))</span>
-<span id="cb103-3"><a href="geostatistics.html#cb103-3" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> InRn_Pred <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">OK_brks =</span> <span class="fu">cut</span>(OK_Pred, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
-<span id="cb103-4"><a href="geostatistics.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predictions</span></span>
-<span id="cb103-5"><a href="geostatistics.html#cb103-5" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
-<span id="cb103-6"><a href="geostatistics.html#cb103-6" aria-hidden="true" tabindex="-1"></a>P_OK_Pred <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb103-7"><a href="geostatistics.html#cb103-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span></span>
-<span id="cb103-8"><a href="geostatistics.html#cb103-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_Pred, <span class="fu">aes</span>(<span class="at">fill =</span> OK_brks, <span class="at">color =</span> OK_brks)) <span class="sc">+</span> </span>
-<span id="cb103-9"><a href="geostatistics.html#cb103-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb103-10"><a href="geostatistics.html#cb103-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb103-11"><a href="geostatistics.html#cb103-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_DL, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb103-12"><a href="geostatistics.html#cb103-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;OK - Predictions&quot;</span>)</span>
-<span id="cb103-13"><a href="geostatistics.html#cb103-13" aria-hidden="true" tabindex="-1"></a>P_OK_Pred</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="geostatistics.html#cb16-1" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>OK_Pred <span class="ot">&lt;-</span> Pred_OK<span class="sc">$</span>var1TG.pred   </span>
+<span id="cb16-2"><a href="geostatistics.html#cb16-2" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>OK_SD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)</span>
+<span id="cb16-3"><a href="geostatistics.html#cb16-3" aria-hidden="true" tabindex="-1"></a>InRn_Pred<span class="sc">$</span>OK_RSD <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Pred_OK<span class="sc">$</span>var1TG.var)<span class="sc">/</span>Pred_OK<span class="sc">$</span>var1TG.pred</span>
+<span id="cb16-4"><a href="geostatistics.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Back to sf format</span></span>
+<span id="cb16-5"><a href="geostatistics.html#cb16-5" aria-hidden="true" tabindex="-1"></a>InRn_DL <span class="ot">&lt;-</span> <span class="fu">as</span>(InRn_DL, <span class="st">&quot;sf&quot;</span>)</span>
+<span id="cb16-6"><a href="geostatistics.html#cb16-6" aria-hidden="true" tabindex="-1"></a>SPDF <span class="ot">&lt;-</span> <span class="fu">as</span>(SPDF, <span class="st">&quot;sf&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="geostatistics.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
+<span id="cb17-2"><a href="geostatistics.html#cb17-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">500</span>, <span class="fu">max</span>(InRn_Pred<span class="sc">$</span>OK_Pred, <span class="at">na.rm =</span> T))</span>
+<span id="cb17-3"><a href="geostatistics.html#cb17-3" aria-hidden="true" tabindex="-1"></a>InRn_Pred <span class="ot">&lt;-</span> InRn_Pred <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">OK_brks =</span> <span class="fu">cut</span>(OK_Pred, breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
+<span id="cb17-4"><a href="geostatistics.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predictions</span></span>
+<span id="cb17-5"><a href="geostatistics.html#cb17-5" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))(<span class="dv">6</span>)</span>
+<span id="cb17-6"><a href="geostatistics.html#cb17-6" aria-hidden="true" tabindex="-1"></a>P_OK_Pred <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb17-7"><a href="geostatistics.html#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="geostatistics.html#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_Pred, <span class="fu">aes</span>(<span class="at">fill =</span> OK_brks, <span class="at">color =</span> OK_brks)) <span class="sc">+</span> </span>
+<span id="cb17-9"><a href="geostatistics.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="geostatistics.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="geostatistics.html#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> InRn_DL, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="geostatistics.html#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;OK - Predictions&quot;</span>)</span>
+<span id="cb17-13"><a href="geostatistics.html#cb17-13" aria-hidden="true" tabindex="-1"></a>P_OK_Pred</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/OK-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Summarize by grids cells of 10 km x 10 km</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="geostatistics.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate the mean of the points in each grid cell of 10 km x 10 km ----</span></span>
-<span id="cb104-2"><a href="geostatistics.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (or municipalities, districts, ...)</span></span>
-<span id="cb104-3"><a href="geostatistics.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb104-4"><a href="geostatistics.html#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span></span>
-<span id="cb104-5"><a href="geostatistics.html#cb104-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km)<span class="sc">+</span></span>
-<span id="cb104-6"><a href="geostatistics.html#cb104-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> SPDF, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="geostatistics.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate the mean of the points in each grid cell of 10 km x 10 km ----</span></span>
+<span id="cb18-2"><a href="geostatistics.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (or municipalities, districts, ...)</span></span>
+<span id="cb18-3"><a href="geostatistics.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a href="geostatistics.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="geostatistics.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km)<span class="sc">+</span></span>
+<span id="cb18-6"><a href="geostatistics.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> SPDF, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/sim-grids-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="geostatistics.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Intersect predictions (points - SPDF) and Grid cells of 10km x 10km  ----</span></span>
-<span id="cb105-2"><a href="geostatistics.html#cb105-2" aria-hidden="true" tabindex="-1"></a>SPDF_Grids10km <span class="ot">&lt;-</span>  <span class="fu">st_intersection</span>(SPDF, Grids_10km) </span>
-<span id="cb105-3"><a href="geostatistics.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(SPDF_Grids10km)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="geostatistics.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Intersect predictions (points - SPDF) and Grid cells of 10km x 10km  ----</span></span>
+<span id="cb19-2"><a href="geostatistics.html#cb19-2" aria-hidden="true" tabindex="-1"></a>SPDF_Grids10km <span class="ot">&lt;-</span>  <span class="fu">st_intersection</span>(SPDF, Grids_10km) </span>
+<span id="cb19-3"><a href="geostatistics.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(SPDF_Grids10km)</span></code></pre></div>
 <pre><code>#     IDW_Pred       OK_Pred        OK_SD           OK_RSD        CELLCODE           EOFORIGIN      
 #  Min.   :   1   Min.   :  8   Min.   :  6.5   Min.   :0.057   Length:4489        Min.   :5120000  
 #  1st Qu.:  21   1st Qu.: 21   1st Qu.: 16.3   1st Qu.:0.435   Class :character   1st Qu.:5150000  
@@ -507,93 +498,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #  Max.   :3730000   476    :  65                                                             
 #                    (Other):4099</code></pre>
 <p>Summarize (by Id)</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="geostatistics.html#cb107-1" aria-hidden="true" tabindex="-1"></a>SPDF_Grids10km_Sum <span class="ot">&lt;-</span> SPDF_Grids10km <span class="sc">%&gt;%</span> </span>
-<span id="cb107-2"><a href="geostatistics.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Id) <span class="sc">%&gt;%</span> </span>
-<span id="cb107-3"><a href="geostatistics.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>(),</span>
-<span id="cb107-4"><a href="geostatistics.html#cb107-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">IDW_AM =</span> <span class="fu">mean</span>(IDW_Pred, <span class="at">na.rm =</span> T),</span>
-<span id="cb107-5"><a href="geostatistics.html#cb107-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">IDW_SD =</span> <span class="fu">sd</span>(IDW_Pred, <span class="at">na.rm =</span> T),</span>
-<span id="cb107-6"><a href="geostatistics.html#cb107-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">OK_AM  =</span> <span class="fu">mean</span>(OK_Pred, <span class="at">na.rm =</span> T), </span>
-<span id="cb107-7"><a href="geostatistics.html#cb107-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">OK_SD  =</span> <span class="fu">sd</span>(OK_Pred, <span class="at">na.rm =</span> T))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="geostatistics.html#cb21-1" aria-hidden="true" tabindex="-1"></a>SPDF_Grids10km_Sum <span class="ot">&lt;-</span> SPDF_Grids10km <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="geostatistics.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Id) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="geostatistics.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb21-4"><a href="geostatistics.html#cb21-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">IDW_AM =</span> <span class="fu">mean</span>(IDW_Pred, <span class="at">na.rm =</span> T),</span>
+<span id="cb21-5"><a href="geostatistics.html#cb21-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">IDW_SD =</span> <span class="fu">sd</span>(IDW_Pred, <span class="at">na.rm =</span> T),</span>
+<span id="cb21-6"><a href="geostatistics.html#cb21-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">OK_AM  =</span> <span class="fu">mean</span>(OK_Pred, <span class="at">na.rm =</span> T), </span>
+<span id="cb21-7"><a href="geostatistics.html#cb21-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">OK_SD  =</span> <span class="fu">sd</span>(OK_Pred, <span class="at">na.rm =</span> T))</span></code></pre></div>
 <p>Add values to Grid cells of 10 x 10 km (Grids_10km_Sum)</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="geostatistics.html#cb108-1" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> <span class="fu">left_join</span>(Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(),</span>
-<span id="cb108-2"><a href="geostatistics.html#cb108-2" aria-hidden="true" tabindex="-1"></a>                            SPDF_Grids10km_Sum <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(),</span>
-<span id="cb108-3"><a href="geostatistics.html#cb108-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">by =</span> <span class="st">&quot;Id&quot;</span>)</span>
-<span id="cb108-4"><a href="geostatistics.html#cb108-4" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span></span>
-<span id="cb108-5"><a href="geostatistics.html#cb108-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>)</span>
-<span id="cb108-6"><a href="geostatistics.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum)</span></code></pre></div>
-<pre><code>#    CELLCODE           EOFORIGIN         NOFORIGIN             Id    
-#  Length:93          Min.   :5120000   Min.   :3610000   340    : 1  
-#  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1  
-#  Mode  :character   Median :5160000   Median :3670000   361    : 1  
-#                     Mean   :5163871   Mean   :3674516   362    : 1  
-#                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1  
-#                     Max.   :5210000   Max.   :3740000   364    : 1  
-#                                                         (Other):87  
-#     GID_0              NAME_0               N.x            Case     
-#  Length:93          Length:93          Min.   : 0.0   Min.   :0.00  
-#  Class :character   Class :character   1st Qu.: 7.0   1st Qu.:0.00  
-#  Mode  :character   Mode  :character   Median :12.0   Median :0.00  
-#                                        Mean   :10.8   Mean   :0.77  
-#                                        3rd Qu.:14.0   3rd Qu.:1.00  
-#                                        Max.   :22.0   Max.   :9.00  
-#                                                       NA&#39;s   :7     
-#        AM            SD            GM           GSD            MIN       
-#  Min.   :  3   Min.   :  1   Min.   :  2   Min.   :1.12   Min.   :  0.3  
-#  1st Qu.: 19   1st Qu.: 19   1st Qu.: 11   1st Qu.:2.28   1st Qu.:  1.7  
-#  Median : 39   Median : 39   Median : 24   Median :2.75   Median :  4.2  
-#  Mean   : 69   Mean   : 68   Mean   : 45   Mean   :2.95   Mean   : 11.4  
-#  3rd Qu.: 86   3rd Qu.: 77   3rd Qu.: 54   3rd Qu.:3.44   3rd Qu.: 11.3  
-#  Max.   :687   Max.   :549   Max.   :472   Max.   :6.20   Max.   :143.2  
-#  NA&#39;s   :7     NA&#39;s   :11    NA&#39;s   :7     NA&#39;s   :11     NA&#39;s   :7      
-#       MAX            AM_brks        Prob          Prob_brks       N.y      
-#  Min.   :   5   [0,25)   :29   Min.   : 0.0   [0,1)    :29   Min.   : 1.0  
-#  1st Qu.:  59   [25,50)  :23   1st Qu.: 0.6   [1,5)    :28   1st Qu.:38.0  
-#  Median : 132   [50,75)  : 9   Median : 2.8   [5,10)   :13   Median :62.0  
-#  Mean   : 213   [75,100) : 9   Mean   : 7.6   [10,20)  :14   Mean   :48.8  
-#  3rd Qu.: 230   [100,200):12   3rd Qu.: 9.7   [20,30)  : 4   3rd Qu.:63.0  
-#  Max.   :1615   [200,687]: 4   Max.   :79.8   [30,79.8]: 5   Max.   :65.0  
-#  NA&#39;s   :7      NA&#39;s     : 7                                 NA&#39;s   :1     
-#      IDW_AM        IDW_SD          OK_AM         OK_SD      
-#  Min.   :  9   Min.   :  1.1   Min.   : 12   Min.   :  0.4  
-#  1st Qu.: 26   1st Qu.: 10.3   1st Qu.: 25   1st Qu.:  4.8  
-#  Median : 46   Median : 17.2   Median : 37   Median : 10.8  
-#  Mean   : 67   Mean   : 30.6   Mean   : 56   Mean   : 17.6  
-#  3rd Qu.: 84   3rd Qu.: 35.3   3rd Qu.: 74   3rd Qu.: 19.8  
-#  Max.   :425   Max.   :220.5   Max.   :340   Max.   :132.7  
-#  NA&#39;s   :1     NA&#39;s   :3       NA&#39;s   :1     NA&#39;s   :3      
-#          geometry.x              geometry.y               geometry 
-#  POLYGON      :93   GEOMETRYCOLLECTION: 7   GEOMETRYCOLLECTION: 1  
-#  epsg:4326    : 0   MULTIPOINT        :82   MULTIPOINT        :90  
-#  +proj=long...: 0   POINT             : 4   POINT             : 2  
-#                     epsg:4326         : 0   epsg:NA           : 0  
-#                     +proj=long...     : 0   +proj=long...     : 0  
-#                                                                    
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="geostatistics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> <span class="fu">left_join</span>(Grids_10km_Sum <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(),</span>
+<span id="cb22-2"><a href="geostatistics.html#cb22-2" aria-hidden="true" tabindex="-1"></a>                            SPDF_Grids10km_Sum <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>(),</span>
+<span id="cb22-3"><a href="geostatistics.html#cb22-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">by =</span> <span class="st">&quot;Id&quot;</span>)</span>
+<span id="cb22-4"><a href="geostatistics.html#cb22-4" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="geostatistics.html#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_sf</span>(<span class="at">sf_column_name =</span> <span class="st">&quot;geometry.x&quot;</span>)</span>
+<span id="cb22-6"><a href="geostatistics.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Grids_10km_Sum)</span></code></pre></div>
+<pre><code>#    CELLCODE           EOFORIGIN         NOFORIGIN             Id        GID_0          
+#  Length:93          Min.   :5120000   Min.   :3610000   340    : 1   Length:93         
+#  Class :character   1st Qu.:5150000   1st Qu.:3640000   341    : 1   Class :character  
+#  Mode  :character   Median :5160000   Median :3670000   361    : 1   Mode  :character  
+#                     Mean   :5163871   Mean   :3674516   362    : 1                     
+#                     3rd Qu.:5180000   3rd Qu.:3710000   363    : 1                     
+#                     Max.   :5210000   Max.   :3740000   364    : 1                     
+#                                                         (Other):87                     
+#     NAME_0               N.x            Case            AM            SD            GM     
+#  Length:93          Min.   : 0.0   Min.   :0.00   Min.   :  3   Min.   :  1   Min.   :  2  
+#  Class :character   1st Qu.: 7.0   1st Qu.:0.00   1st Qu.: 19   1st Qu.: 19   1st Qu.: 11  
+#  Mode  :character   Median :12.0   Median :0.00   Median : 39   Median : 39   Median : 24  
+#                     Mean   :10.8   Mean   :0.77   Mean   : 69   Mean   : 68   Mean   : 45  
+#                     3rd Qu.:14.0   3rd Qu.:1.00   3rd Qu.: 86   3rd Qu.: 77   3rd Qu.: 54  
+#                     Max.   :22.0   Max.   :9.00   Max.   :687   Max.   :549   Max.   :472  
+#                                    NA&#39;s   :7      NA&#39;s   :7     NA&#39;s   :11    NA&#39;s   :7    
+#       GSD            MIN             MAX            AM_brks        Prob          Prob_brks 
+#  Min.   :1.12   Min.   :  0.3   Min.   :   5   [0,25)   :29   Min.   : 0.0   [0,1)    :29  
+#  1st Qu.:2.28   1st Qu.:  1.7   1st Qu.:  59   [25,50)  :23   1st Qu.: 0.6   [1,5)    :28  
+#  Median :2.75   Median :  4.2   Median : 132   [50,75)  : 9   Median : 2.8   [5,10)   :13  
+#  Mean   :2.95   Mean   : 11.4   Mean   : 213   [75,100) : 9   Mean   : 7.6   [10,20)  :14  
+#  3rd Qu.:3.44   3rd Qu.: 11.3   3rd Qu.: 230   [100,200):12   3rd Qu.: 9.7   [20,30)  : 4  
+#  Max.   :6.20   Max.   :143.2   Max.   :1615   [200,687]: 4   Max.   :79.8   [30,79.8]: 5  
+#  NA&#39;s   :11     NA&#39;s   :7       NA&#39;s   :7      NA&#39;s     : 7                                
+#       N.y          IDW_AM.x      IDW_SD.x        OK_AM.x       OK_SD.x           IDW_brks 
+#  Min.   : 1.0   Min.   :  9   Min.   :  1.1   Min.   : 12   Min.   :  0.4   [0,25)   :23  
+#  1st Qu.:38.0   1st Qu.: 26   1st Qu.: 10.3   1st Qu.: 25   1st Qu.:  4.8   [25,50)  :30  
+#  Median :62.0   Median : 46   Median : 17.2   Median : 37   Median : 10.8   [50,75)  : 8  
+#  Mean   :48.8   Mean   : 67   Mean   : 30.6   Mean   : 56   Mean   : 17.6   [75,100) :14  
+#  3rd Qu.:63.0   3rd Qu.: 84   3rd Qu.: 35.3   3rd Qu.: 74   3rd Qu.: 19.8   [100,200):14  
+#  Max.   :65.0   Max.   :425   Max.   :220.5   Max.   :340   Max.   :132.7   [200,425]: 3  
+#  NA&#39;s   :1      NA&#39;s   :1     NA&#39;s   :3       NA&#39;s   :1     NA&#39;s   :3       NA&#39;s     : 1  
+#       OK_brks         N           IDW_AM.y      IDW_SD.y        OK_AM.y       OK_SD.y     
+#  [0,25)   :24   Min.   : 1.0   Min.   :  9   Min.   :  1.1   Min.   : 12   Min.   :  0.4  
+#  [25,50)  :29   1st Qu.:38.0   1st Qu.: 26   1st Qu.: 10.3   1st Qu.: 25   1st Qu.:  4.8  
+#  [50,75)  :16   Median :62.0   Median : 46   Median : 17.2   Median : 37   Median : 10.8  
+#  [75,100) :12   Mean   :48.8   Mean   : 67   Mean   : 30.6   Mean   : 56   Mean   : 17.6  
+#  [100,200): 9   3rd Qu.:63.0   3rd Qu.: 84   3rd Qu.: 35.3   3rd Qu.: 74   3rd Qu.: 19.8  
+#  [200,340]: 2   Max.   :65.0   Max.   :425   Max.   :220.5   Max.   :340   Max.   :132.7  
+#  NA&#39;s     : 1   NA&#39;s   :1      NA&#39;s   :1     NA&#39;s   :3       NA&#39;s   :1     NA&#39;s   :3      
+#          geometry.x              geometry.y             geometry.x.x
+#  POLYGON      :93   GEOMETRYCOLLECTION: 7   GEOMETRYCOLLECTION: 1   
+#  epsg:4326    : 0   MULTIPOINT        :82   MULTIPOINT        :90   
+#  +proj=long...: 0   POINT             : 4   POINT             : 2   
+#                     epsg:4326         : 0   epsg:NA           : 0   
+#                     +proj=long...     : 0   +proj=long...     : 0   
+#                                                                     
+#                                                                     
+#              geometry.y.y
+#  GEOMETRYCOLLECTION: 1   
+#  MULTIPOINT        :90   
+#  POINT             : 2   
+#  epsg:NA           : 0   
+#  +proj=long...     : 0   
+#                          
 # </code></pre>
 <p>Plot maps</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="geostatistics.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
-<span id="cb110-2"><a href="geostatistics.html#cb110-2" aria-hidden="true" tabindex="-1"></a>breaks_IDW <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>IDW_AM, <span class="at">na.rm =</span> T))</span>
-<span id="cb110-3"><a href="geostatistics.html#cb110-3" aria-hidden="true" tabindex="-1"></a>breaks_OK  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>OK_AM, <span class="at">na.rm =</span> T))</span>
-<span id="cb110-4"><a href="geostatistics.html#cb110-4" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> </span>
-<span id="cb110-5"><a href="geostatistics.html#cb110-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IDW_brks =</span> <span class="fu">cut</span>(IDW_AM, breaks_IDW, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F),</span>
-<span id="cb110-6"><a href="geostatistics.html#cb110-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">OK_brks  =</span> <span class="fu">cut</span>(OK_AM , breaks_OK , <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
-<span id="cb110-7"><a href="geostatistics.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Maps </span></span>
-<span id="cb110-8"><a href="geostatistics.html#cb110-8" aria-hidden="true" tabindex="-1"></a>P_Grids10km_IDW <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb110-9"><a href="geostatistics.html#cb110-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
-<span id="cb110-10"><a href="geostatistics.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> IDW_brks)) <span class="sc">+</span> </span>
-<span id="cb110-11"><a href="geostatistics.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb110-12"><a href="geostatistics.html#cb110-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;IDW - Predictions&quot;</span>)</span>
-<span id="cb110-13"><a href="geostatistics.html#cb110-13" aria-hidden="true" tabindex="-1"></a>P_Grids10km_OK <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb110-14"><a href="geostatistics.html#cb110-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
-<span id="cb110-15"><a href="geostatistics.html#cb110-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> OK_brks)) <span class="sc">+</span> </span>
-<span id="cb110-16"><a href="geostatistics.html#cb110-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb110-17"><a href="geostatistics.html#cb110-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;OK - Predictions&quot;</span>)</span>
-<span id="cb110-18"><a href="geostatistics.html#cb110-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-19"><a href="geostatistics.html#cb110-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot maps</span></span>
-<span id="cb110-20"><a href="geostatistics.html#cb110-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(P_Grids10km_AM, P_Grids10km_IDW, P_Grids10km_OK, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="geostatistics.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Breaks </span></span>
+<span id="cb24-2"><a href="geostatistics.html#cb24-2" aria-hidden="true" tabindex="-1"></a>breaks_IDW <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>IDW_AM, <span class="at">na.rm =</span> T))</span>
+<span id="cb24-3"><a href="geostatistics.html#cb24-3" aria-hidden="true" tabindex="-1"></a>breaks_OK  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="fu">max</span>(Grids_10km_Sum<span class="sc">$</span>OK_AM, <span class="at">na.rm =</span> T))</span>
+<span id="cb24-4"><a href="geostatistics.html#cb24-4" aria-hidden="true" tabindex="-1"></a>Grids_10km_Sum <span class="ot">&lt;-</span> Grids_10km_Sum <span class="sc">%&gt;%</span> </span>
+<span id="cb24-5"><a href="geostatistics.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IDW_brks =</span> <span class="fu">cut</span>(IDW_AM, breaks_IDW, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F),</span>
+<span id="cb24-6"><a href="geostatistics.html#cb24-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">OK_brks  =</span> <span class="fu">cut</span>(OK_AM , breaks_OK , <span class="at">include.lowest =</span> T, <span class="at">right =</span> F))</span>
+<span id="cb24-7"><a href="geostatistics.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Maps </span></span>
+<span id="cb24-8"><a href="geostatistics.html#cb24-8" aria-hidden="true" tabindex="-1"></a>P_Grids10km_IDW <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-9"><a href="geostatistics.html#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
+<span id="cb24-10"><a href="geostatistics.html#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> IDW_brks)) <span class="sc">+</span> </span>
+<span id="cb24-11"><a href="geostatistics.html#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="geostatistics.html#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;IDW - Predictions&quot;</span>)</span>
+<span id="cb24-13"><a href="geostatistics.html#cb24-13" aria-hidden="true" tabindex="-1"></a>P_Grids10km_OK <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-14"><a href="geostatistics.html#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Country) <span class="sc">+</span> </span>
+<span id="cb24-15"><a href="geostatistics.html#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> Grids_10km_Sum, <span class="fu">aes</span>(<span class="at">fill =</span> OK_brks)) <span class="sc">+</span> </span>
+<span id="cb24-16"><a href="geostatistics.html#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;Bq/m3&quot;</span>, <span class="at">values =</span> cols, <span class="at">guide =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb24-17"><a href="geostatistics.html#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;OK - Predictions&quot;</span>)</span>
+<span id="cb24-18"><a href="geostatistics.html#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="geostatistics.html#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot maps</span></span>
+<span id="cb24-20"><a href="geostatistics.html#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(P_Grids10km_AM, P_Grids10km_IDW, P_Grids10km_OK, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="radon_mapping_book_files/figure-html/plot-grids-10km-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="geostatistics.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Export results to shape file (.shp) for GIS: InRn_Pred and  Grids_10km_Sum</span></span>
-<span id="cb111-2"><a href="geostatistics.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="co">#st_write(InRn_Pred, &quot;InRn_Pred.shp&quot;, delete_layer = TRUE)           # overwrites</span></span>
-<span id="cb111-3"><a href="geostatistics.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="co">#st_write(Grids_10km_Sum, &quot;Grids_10km_Sum.shp&quot;, delete_layer = TRUE) # overwrites</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="geostatistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Export results to shape file (.shp) for GIS: InRn_Pred and  Grids_10km_Sum</span></span>
+<span id="cb25-2"><a href="geostatistics.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#st_write(InRn_Pred, &quot;InRn_Pred.shp&quot;, delete_layer = TRUE)           # overwrites</span></span>
+<span id="cb25-3"><a href="geostatistics.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#st_write(Grids_10km_Sum, &quot;Grids_10km_Sum.shp&quot;, delete_layer = TRUE) # overwrites</span></span></code></pre></div>
+</div>
+<div id="sequential-gaussian-simulation" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Sequential Gaussian Simulation</h2>
 
 </div>
 </div>
